@@ -145,11 +145,22 @@ public class MainView extends HorizontalScrollView {
                 int scrollX = getScrollX();
                 System.out.println("onTouchEvent -- scrollX: " + scrollX);
                 if(scrollX >= 200){
-                    smoothScrollTo(menuWidth, 0);
+                    this.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            smoothScrollTo(menuWidth, 0);
+                        }
+                    });
+
                     isOpen = false;
                 }else{
+                    this.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            smoothScrollTo(0, 0);
+                        }
+                    });
 
-                    smoothScrollTo(0, 0);
                     isOpen = true;
                 }
                 break;
@@ -167,10 +178,6 @@ public class MainView extends HorizontalScrollView {
      * 区别2：菜单的偏移量需要修改
      * 区别3：菜单的显示时有缩放以及透明度变化 缩放：0.7 ~1.0 1.0 - scale * 0.3 透明度 0.6 ~ 1.0
      * 0.6+ 0.4 * (1- scale) ;
-     * @param l
-     * @param t
-     * @param oldl
-     * @param oldt
      */
     /*
     @Override
