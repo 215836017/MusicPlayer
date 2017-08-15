@@ -25,6 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void goToMainActivity() {
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

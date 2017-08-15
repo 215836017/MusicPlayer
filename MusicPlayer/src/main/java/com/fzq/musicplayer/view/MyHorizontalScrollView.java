@@ -12,13 +12,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.fzq.musicplayer.R;
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by fzq on 2017/6/25.
  */
 
-public class MainView extends HorizontalScrollView {
+public class MyHorizontalScrollView extends HorizontalScrollView {
 
     /**
      * 因为HorizontalScrollView里面要求只能包含一个控件，所以，里面的根控件用LinearLayout
@@ -47,7 +46,7 @@ public class MainView extends HorizontalScrollView {
 
     private boolean once = false;
 
-    public MainView(Context context) {
+    public MyHorizontalScrollView(Context context) {
         this(context, null);
     }
 
@@ -57,7 +56,7 @@ public class MainView extends HorizontalScrollView {
      * @param context
      * @param attrs
      */
-    public MainView(Context context, AttributeSet attrs) {
+    public MyHorizontalScrollView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
@@ -68,7 +67,7 @@ public class MainView extends HorizontalScrollView {
      * @param attrs
      * @param defStyleAttr
      */
-    public MainView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyHorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.mainViewAttr, defStyleAttr, 0);

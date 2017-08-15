@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.fzq.musicplayer.view.MainView
+    <com.fzq.musicplayer.view.MyHorizontalScrollView
         android:id="@+id/mainAct_mainView"
         android:layout_width="match_parent"
         selfattr:paddingEnd="80dp"
@@ -24,5 +24,5 @@
                layout="@layout/layout_main_activity_content" />
         </LinearLayout>
 
-    </com.fzq.musicplayer.view.MainView>
+    </com.fzq.musicplayer.view.MyHorizontalScrollView>
 </LinearLayout>

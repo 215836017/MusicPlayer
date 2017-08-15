@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 
 public class Constant {
 
+    /** SharedPreferens的name */
+    public final static String spName = "MyMusicPlayer";
 
     /** 需要播放的音乐文件的路径 */
     public static String currentPlayingPath = "";

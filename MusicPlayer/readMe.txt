@@ -1,3 +1,9 @@
+第三方库(框架)
+1. ButterKnife(2017.08.15)
+
+
+
+
 1. 目标：做一个仿酷狗音乐的APP
 
 2017.05.09
@@ -59,3 +65,14 @@
 2. 完成了外层的ViewPaper和“看”Fragment中的ViewPaper，但是ViewPaper和ScrollView的滑动事件冲突了，这个还没有解决。
 
 2017.07.09
+
+
+1. 解决了smoothScrollTo()方法无效的问题，方法是将smoothScrollTo()方法用this.post()包裹，具体什么原理现在还不清楚。
+
+2017.07.12
+
+
+
+1. 主要在MainActivity.java中写了左侧菜单栏中各个组件点击事件的流程，搭了个基本的架子。并在com.fzq.musicplayer.ui.leftmenu包中定义相关的Activity。
+
+2017.08.15
