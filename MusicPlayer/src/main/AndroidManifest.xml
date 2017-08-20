@@ -35,6 +35,7 @@
         <activity android:name=".ui.leftmenu.KuiSheYinXiaoActivity"/>
         <activity android:name=".ui.leftmenu.YinYueGongJuActivity"/>
         <activity android:name=".ui.leftmenu.SettingActivity"/>
+        <activity android:name=".ui.topfrags.LocalMusicActivity"/>
 
 
     </application>

@@ -76,3 +76,14 @@
 1. 主要在MainActivity.java中写了左侧菜单栏中各个组件点击事件的流程，搭了个基本的架子。并在com.fzq.musicplayer.ui.leftmenu包中定义相关的Activity。
 
 2017.08.15
+
+
+
+1. 创建了com.fzq.musicplayer.ui.topfrags.LocalMusicActivity.java界面，使用之前的activity_local.xml并将里面的ListView改为RecyclerView。
+
+2017.08.18
+
+
+1. 主要写了在主界面中点击本地乐库后，进入本地音乐界面的四个Fragment，其中只把单曲的Fragment的数据显示出来了。
+
+2017.08.19

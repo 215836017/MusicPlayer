@@ -34,4 +34,5 @@ dependencies {
     compile files('libs/nineoldandroids-2.4.0.jar')
     compile 'com.jakewharton:butterknife:8.7.0'
     apt 'com.jakewharton:butterknife-compiler:8.7.0'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 }

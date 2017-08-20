@@ -17,6 +17,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         MusicUtil.getIntance().getGlobalMusicList(this);
+
         SharedPreferensUtil.getInstance(this);
     }
 }

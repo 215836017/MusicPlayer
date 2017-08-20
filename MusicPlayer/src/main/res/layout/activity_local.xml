@@ -4,8 +4,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/localAct_layout_guide"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@color/bg1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -13,45 +18,109 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/localAct_layout_danqu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="单曲/6"
-                android:textSize="18sp" />
+                android:layout_weight="1">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="歌手/6"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/localAct_textView_danqu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="单曲"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="专辑/6"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/localAct_textView_danquCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/localAct_textView_danqu"
+                    android:layout_toRightOf="@id/localAct_textView_danqu"
+                    android:text="/6"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/localAct_layout_geshou"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="文件夹/6"
-                android:textSize="18sp" />
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/localAct_textView_geshou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="歌手"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/localAct_textView_geshouCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/localAct_textView_geshou"
+                    android:layout_toRightOf="@id/localAct_textView_geshou"
+                    android:text="/6"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/localAct_layout_zhuanji"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/localAct_textView_zhuanji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="专辑"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/localAct_textView_zhuanjiCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/localAct_textView_zhuanji"
+                    android:layout_toRightOf="@id/localAct_textView_zhuanji"
+                    android:text="/6"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/localAct_layout_wenjianjia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/localAct_textView_wenjianjia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="文件夹"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/localAct_textView_wenjianjiaCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/localAct_textView_wenjianjia"
+                    android:layout_toRightOf="@id/localAct_textView_wenjianjia"
+                    android:text="/6"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -60,75 +129,26 @@
             android:layout_height="2px"
             android:background="#0000ff" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/test_text01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="播放顺序" />
-
-            <TextView
-                android:id="@+id/test_text02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/test_text01"
-                android:text="归零" />
-
-            <TextView
-                android:id="@+id/test_text03"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="多选" />
-
-            <TextView
-                android:id="@+id/test_text04"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@id/test_text03"
-                android:text="排序" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@id/test_text04"
-                android:text="搜索" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="#0000ff" />
-
         <ListView
-            android:id="@+id/localAct_list"
+            android:id="@+id/localAct_list_old"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
     </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/localAct_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/localAct_layout_guide"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <include
-            layout="@layout/layout_palying" />
+        <include layout="@layout/layout_palying" />
     </LinearLayout>
 
 </RelativeLayout>

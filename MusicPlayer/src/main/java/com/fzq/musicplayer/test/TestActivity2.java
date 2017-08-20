@@ -33,7 +33,7 @@ public class TestActivity2 extends AppCompatActivity {
         System.out.println(musicList.get(2).toString());
 
 
-        listView = (ListView) findViewById(R.id.localAct_list);
+        listView = (ListView) findViewById(R.id.localAct_list_old);
         adapter = new MyMusicAdapter(this, musicList);
         listView.setAdapter(adapter);
 

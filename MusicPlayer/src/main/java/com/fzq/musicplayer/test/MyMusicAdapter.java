@@ -48,10 +48,10 @@ public class MyMusicAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (null == convertView) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.activity_local_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.layout_fragment_danqu_list_item, parent, false);
 
-            viewHolder.name = (TextView) convertView.findViewById(R.id.layout_localMusic_name);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.layout_localMusic_author);
+//            viewHolder.name = (TextView) convertView.findViewById(R.id.layout_localMusic_name);
+//            viewHolder.author = (TextView) convertView.findViewById(R.id.layout_localMusic_author);
 
             convertView.setTag(viewHolder);
         }else {

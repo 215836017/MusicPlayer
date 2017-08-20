@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.fzq.musicplayer.R;
-import com.fzq.musicplayer.fragments.FragmegtAdapter;
-import com.fzq.musicplayer.fragments.TopFragChang;
-import com.fzq.musicplayer.fragments.TopFragKan;
-import com.fzq.musicplayer.fragments.TopFragTing;
+import com.fzq.musicplayer.ui.fragments.FragmentAdapter;
+import com.fzq.musicplayer.ui.fragments.mainactivity.TopFragChang;
+import com.fzq.musicplayer.ui.fragments.mainactivity.TopFragKan;
+import com.fzq.musicplayer.ui.fragments.mainactivity.TopFragTing;
 import com.fzq.musicplayer.ui.leftmenu.DingShiGuanBiActivity;
 import com.fzq.musicplayer.ui.leftmenu.HuiYuanZhongXinActivity;
 import com.fzq.musicplayer.ui.leftmenu.KuiSheYinXiaoActivity;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intent = new Intent();
 
-    private FragmegtAdapter adapter;
+    private FragmentAdapter adapter;
     private List<Fragment> fragmentList;
 
     @Override
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(new TopFragKan());
         fragmentList.add(new TopFragChang());
 
-        adapter = new FragmegtAdapter(getSupportFragmentManager(), fragmentList);
+        adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
 
         myViewPager.setAdapter(adapter);
 
