@@ -5,11 +5,12 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/danquFrag_listItem_layout_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/layout_localMusic_album"
+            android:id="@+id/danquFrag_listItem_image_album"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
@@ -20,17 +21,17 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/layout_localMusic_album"
+            android:layout_toRightOf="@id/danquFrag_listItem_image_album"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/danquFrag_listItem_musicName"
+                android:id="@+id/danquFrag_listItem_text_musicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="假如爱有天意" />
 
             <TextView
-                android:id="@+id/danquFrag_listItem_geShou"
+                android:id="@+id/danquFrag_listItem_text_geShou"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -39,6 +40,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/danquFrag_listItem_text_showMore"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -50,7 +52,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/layout_moreOperators"
+        android:id="@+id/danquFrag_listItem_layout_more"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
