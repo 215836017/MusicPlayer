@@ -14,7 +14,7 @@ public class MusicInfo {
     private String displayName;   //歌曲名称
     private String musicNameNoTail;   //固定长度并且没有后缀的歌曲名称
     private String artist;  //歌手名称
-    private long duration;   //歌曲时长
+    private int duration;   //歌曲时长
     private long size;//歌曲大小
     private String path;//歌曲路径
     private String lrcTitle;//歌词名称
@@ -25,7 +25,7 @@ public class MusicInfo {
     }
 
     public MusicInfo(long songId, String title, String album, long albumId, String displayName,
-                     String musicNameNoTail, String artist, long duration, long size, String path,
+                     String musicNameNoTail, String artist, int duration, long size, String path,
                      String lrcTitle, String lrcSize) {
         this.songId = songId;
         this.title = title;
@@ -111,11 +111,11 @@ public class MusicInfo {
         this.artist = artist;
     }
 
-    public long getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

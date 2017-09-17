@@ -3,8 +3,8 @@
     package="com.fzq.musicplayer">
 
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <application
@@ -23,21 +23,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".test.TestActivity1"/>
-        <activity android:name=".test.TestActivity2"/>
-        <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".ui.leftmenu.UserInfoActivity"/>
-        <activity android:name=".ui.leftmenu.UserLevelActivity"/>
-        <activity android:name=".ui.leftmenu.XiaoXiZhongXinActitity"/>
-        <activity android:name=".ui.leftmenu.PiFuZhongXinActivity"/>
-        <activity android:name=".ui.leftmenu.HuiYuanZhongXinActivity"/>
-        <activity android:name=".ui.leftmenu.DingShiGuanBiActivity"/>
-        <activity android:name=".ui.leftmenu.KuiSheYinXiaoActivity"/>
-        <activity android:name=".ui.leftmenu.YinYueGongJuActivity"/>
-        <activity android:name=".ui.leftmenu.SettingActivity"/>
-        <activity android:name=".ui.topfrags.LocalMusicActivity"/>
+        <activity android:name=".test.TestActivity1" />
+        <activity android:name=".test.TestActivity2" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.leftmenu.UserInfoActivity" />
+        <activity android:name=".ui.leftmenu.UserLevelActivity" />
+        <activity android:name=".ui.leftmenu.XiaoXiZhongXinActitity" />
+        <activity android:name=".ui.leftmenu.PiFuZhongXinActivity" />
+        <activity android:name=".ui.leftmenu.HuiYuanZhongXinActivity" />
+        <activity android:name=".ui.leftmenu.DingShiGuanBiActivity" />
+        <activity android:name=".ui.leftmenu.KuiSheYinXiaoActivity" />
+        <activity android:name=".ui.leftmenu.YinYueGongJuActivity" />
+        <activity android:name=".ui.leftmenu.SettingActivity" />
+        <activity android:name=".ui.topfrags.LocalMusicActivity" />
+        <activity android:name=".ui.PlayingActivity" />
 
 
+        <service android:name=".service.MusicService"/>
     </application>
 
 

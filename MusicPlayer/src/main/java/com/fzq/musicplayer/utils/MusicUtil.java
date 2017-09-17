@@ -52,71 +52,71 @@ public class MusicUtil {
         String str1 = (MediaStore.Audio.Albums.getContentUri("aaa")).toString();
         String str2 = (MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI).toString();
         String str3 = (MediaStore.Audio.Albums.INTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Albums 部分:"
-                + "\nMediaStore.Audio.Albums.getContentUri() ---- " + str1
-                + "\nMediaStore.Audio.Albums.EXTERNAL_CONTENT_URI ---- " + str2
-                + "\nMediaStore.Audio.Albums.INTERNAL_CONTENT_URI ---- " + str3);
+//        System.out.println("\nMediaStore.Audio.Albums 部分:"
+//                + "\nMediaStore.Audio.Albums.getContentUri() ---- " + str1
+//                + "\nMediaStore.Audio.Albums.EXTERNAL_CONTENT_URI ---- " + str2
+//                + "\nMediaStore.Audio.Albums.INTERNAL_CONTENT_URI ---- " + str3);
 
 
         //MediaStore.Audio.Artists.Albums部分
         String str4 = (MediaStore.Audio.Artists.Albums.getContentUri("aaa", 123)).toString();
-        System.out.println("\nMediaStore.Audio.Artists.Albums部分:"
-                + "\nMediaStore.Audio.Artists.Albums.getContentUri() ---- " + str4);
+//        System.out.println("\nMediaStore.Audio.Artists.Albums部分:"
+//                + "\nMediaStore.Audio.Artists.Albums.getContentUri() ---- " + str4);
 
         //MediaStore.Audio.Artists部分
         String str5 = (MediaStore.Audio.Artists.getContentUri("aaa")).toString();
         String str6 = (MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI).toString();
         String str7 = (MediaStore.Audio.Artists.INTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Artists部分:"
-                + "\nMediaStore.Audio.Artists.getContentUri() ---- " + str5
-                + "\nMediaStore.Audio.Artists.EXTERNAL_CONTENT_URI ---- " + str6
-                + "\nMediaStore.Audio.Artists.INTERNAL_CONTENT_URI ---- " + str7);
+//        System.out.println("\nMediaStore.Audio.Artists部分:"
+//                + "\nMediaStore.Audio.Artists.getContentUri() ---- " + str5
+//                + "\nMediaStore.Audio.Artists.EXTERNAL_CONTENT_URI ---- " + str6
+//                + "\nMediaStore.Audio.Artists.INTERNAL_CONTENT_URI ---- " + str7);
 
         //MediaStore.Audio.Genres.Members部分
         String str8 = (MediaStore.Audio.Genres.Members.getContentUri("aaa", 123)).toString();
-        System.out.println("\nMediaStore.Audio.Genres.Members部分:"
-                + "\nMediaStore.Audio.Genres.Members.getContentUri() ---- " + str8);
+//        System.out.println("\nMediaStore.Audio.Genres.Members部分:"
+//                + "\nMediaStore.Audio.Genres.Members.getContentUri() ---- " + str8);
 
         // MediaStore.Audio.Genres部分
         String str9 = (MediaStore.Audio.Genres.getContentUri("aaa")).toString();
         String str10 = (MediaStore.Audio.Genres.getContentUriForAudioId("aaa", 123)).toString();
         String str11 = (MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI).toString();
         String str12 = (MediaStore.Audio.Genres.INTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Genres部分:"
-                + "\nMediaStore.Audio.Genres.getContentUri() ---- " + str9
-                + "\nMediaStore.Audio.Genres.getContentUriForAudioId() ---- " + str10
-                + "\nMediaStore.Audio.Genres.EXTERNAL_CONTENT_URI ---- " + str11
-                + "\nMediaStore.Audio.Genres.INTERNAL_CONTENT_URI ---- " + str12);
+//        System.out.println("\nMediaStore.Audio.Genres部分:"
+//                + "\nMediaStore.Audio.Genres.getContentUri() ---- " + str9
+//                + "\nMediaStore.Audio.Genres.getContentUriForAudioId() ---- " + str10
+//                + "\nMediaStore.Audio.Genres.EXTERNAL_CONTENT_URI ---- " + str11
+//                + "\nMediaStore.Audio.Genres.INTERNAL_CONTENT_URI ---- " + str12);
 
         // MediaStore.Audio.Media部分
         String str13 = (MediaStore.Audio.Media.getContentUri("aaa")).toString();
         String str14 = (MediaStore.Audio.Media.getContentUriForPath("aaa")).toString();
         String str15 = (MediaStore.Audio.Media.INTERNAL_CONTENT_URI).toString();
         String str16 = (MediaStore.Audio.Media.EXTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Media部分:"
-                + "\nMediaStore.Audio.Media.getContentUri() ---- " + str13
-                + "\nMediaStore.Audio.Media.getContentUriForPath() ---- " + str14
-                + "\nMediaStore.Audio.Media.INTERNAL_CONTENT_URI ---- " + str15
-                + "\nMediaStore.Audio.Media.EXTERNAL_CONTENT_URI ---- " + str16);
+//        System.out.println("\nMediaStore.Audio.Media部分:"
+//                + "\nMediaStore.Audio.Media.getContentUri() ---- " + str13
+//                + "\nMediaStore.Audio.Media.getContentUriForPath() ---- " + str14
+//                + "\nMediaStore.Audio.Media.INTERNAL_CONTENT_URI ---- " + str15
+//                + "\nMediaStore.Audio.Media.EXTERNAL_CONTENT_URI ---- " + str16);
 
         // MediaStore.Audio.Playlists.Members部分
         String str17 = (MediaStore.Audio.Playlists.Members.getContentUri("aaa", 123)).toString();
-        System.out.println("\nMediaStore.Audio.Playlists.Members部分:"
-                + "\nMediaStore.Audio.Playlists.Members.getContentUri() ---- " + str17);
+//        System.out.println("\nMediaStore.Audio.Playlists.Members部分:"
+//                + "\nMediaStore.Audio.Playlists.Members.getContentUri() ---- " + str17);
 
         // MediaStore.Audio.Playlists部分
         String str18 = (MediaStore.Audio.Playlists.getContentUri("aaa")).toString();
         String str19 = (MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI).toString();
         String str20 = (MediaStore.Audio.Playlists.INTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Playlists部分:"
-                + "\nMediaStore.Audio.Playlists.getContentUri() ---- " + str18
-                + "\nMediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI ---- " + str19
-                + "\nMediaStore.Audio.Playlists.INTERNAL_CONTENT_URI ---- " + str20);
+//        System.out.println("\nMediaStore.Audio.Playlists部分:"
+//                + "\nMediaStore.Audio.Playlists.getContentUri() ---- " + str18
+//                + "\nMediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI ---- " + str19
+//                + "\nMediaStore.Audio.Playlists.INTERNAL_CONTENT_URI ---- " + str20);
 
         // MediaStore部分
         String str21 = MediaStore.getMediaScannerUri().toString();
-        System.out.println("\nMediaStore部分:"
-                + "\nMediaStore.getMediaScannerUri() ---- " + str21);
+//        System.out.println("\nMediaStore部分:"
+//                + "\nMediaStore.getMediaScannerUri() ---- " + str21);
 
         //打印结果见最下面。
 
@@ -177,18 +177,26 @@ public class MusicUtil {
 //                    .getColumnIndex("_data"));// 文件路径
 
             if (isMuic != 0) {
-                System.out.println("hahahaha");
+//                System.out.println("hahahaha");
                 musicInfo.setSongId(id);
                 musicInfo.setAlbumId(albumId);
-                musicInfo.setDuration(duration);
+                musicInfo.setDuration((int)duration);
                 musicInfo.setSize(musicSize);
                 musicInfo.setTitle(title);
                 musicInfo.setArtist(artist);
                 musicInfo.setAlbum(album);
                 musicInfo.setDisplayName(displayName);
+                musicInfo.setMusicNameNoTail(displayName.split("\\.")[0]);
                 musicInfo.setPath(musicPath);
 
-                musicList.add(musicInfo);
+//                System.out.println("musicInfo: " + musicInfo.toString());
+/*
+I/System.out: musicInfo: MusicInfo{songId=5027, title='小苹果', album='全球中文音乐榜上榜 中秋演唱会', albumId=4, displayName='xiaopingguo.mp3', musicNameNoTitle='null', artist='筷子兄弟', duration=202000, size=3239667, path='/storage/emulated/0/Music/xiaopingguo.mp3', lrcTitle='null', lrcSize='null'}
+09-16 12:32:32.117 23607-23607/com.fzq.musicplayer I/System.out: hahahaha
+09-16 12:32:32.117 23607-23607/com.fzq.musicplayer I/System.out: musicInfo: MusicInfo{songId=5023, title='凤凰传奇 - 最炫民族风 - DJ版', album='<unknown>', albumId=3, displayName='zuixuanminzufeng.mp3', musicNameNoTitle='null', artist='<unknown>', duration=370834, size=5933409, path='/storage/emulated/0/Music/zuixuanminzufeng.mp3', lrcTitle='null', lrcSize='null'}
+              
+*/
+			  musicList.add(musicInfo);
             }
 
             //一定要记得
@@ -197,7 +205,6 @@ public class MusicUtil {
 
         System.out.println("总共找到" + musicList.size() + "个音乐文件");
     }
-
 
 }
 

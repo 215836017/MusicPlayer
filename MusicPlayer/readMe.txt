@@ -87,3 +87,22 @@
 1. 主要写了在主界面中点击本地乐库后，进入本地音乐界面的四个Fragment，其中只把单曲的Fragment的数据显示出来了。
 
 2017.08.19
+
+
+1. 主要测试并实现了com.fzq.musicplayer.ui.fragments.localmusic.DanQuAdapter的Item中多个控件的点击事件。目前认为是比较好的一种实现方式。
+
+2017.09.03
+
+
+
+1. 新加了正在播放的界面：PlayingActivity.java。
+
+2. 完成了播放相关的逻辑。
+
+2017.09.16
+
+
+
+1. 播放的时候日志打印的逻辑流程没有问题，但就是播放没有声音。原来是忘了在AndroidManifest文件中声明MusicService.java了，fuck。。。。。
+
+2017.09.17

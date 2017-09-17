@@ -26,6 +26,7 @@ import butterknife.OnClick;
 
 /**
  * Created by fzq on 2017/8/18.
+ * 在主界面中点击 “本地音乐”后进入这里
  */
 
 public class LocalMusicActivity extends AppCompatActivity {

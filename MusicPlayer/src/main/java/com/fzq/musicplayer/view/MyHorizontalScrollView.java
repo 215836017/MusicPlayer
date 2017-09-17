@@ -12,6 +12,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.fzq.musicplayer.R;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by fzq on 2017/6/25.
@@ -74,7 +75,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         for (int i = 0; i < typedArray.getIndexCount(); i++) {
             int attr = typedArray.getIndex(i);
             if (attr == R.styleable.mainViewAttr_rightPadding) {
-                menuRightPadding = typedArray.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
+                menuRightPadding = typedArray.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200,
                         context.getResources().getDisplayMetrics()));
 
                 break;
@@ -126,7 +127,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
     }
 
     /**
-     * 第三步：绘画，交给父控件HorizontalScrollView
+     * 第三步：绘画，这里交给了父控件HorizontalScrollView
      */
 
     /**
@@ -143,7 +144,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
             case MotionEvent.ACTION_UP:
                 int scrollX = getScrollX();
                 System.out.println("onTouchEvent -- scrollX: " + scrollX);
-                if(scrollX >= 200){
+                if(scrollX >= (screenWidth/2)){
                     this.post(new Runnable() {
                         @Override
                         public void run() {
@@ -178,7 +179,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
      * 区别3：菜单的显示时有缩放以及透明度变化 缩放：0.7 ~1.0 1.0 - scale * 0.3 透明度 0.6 ~ 1.0
      * 0.6+ 0.4 * (1- scale) ;
      */
-    /*
+
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
@@ -192,15 +193,15 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
          * 0.6+ 0.4 * (1- scale) ;
          *
          */
-    /*
+
         float rightScale = 0.7f + 0.3f * scale;
         float leftScale = 1.0f - scale * 0.3f;
         float leftAlpha = 0.6f + 0.4f * (1 - scale);
 
         // 调用属性动画，设置TranslationX
-        ViewHelper.setRotationX(menuView, menuWidth * scale * 0.8f);
+//        ViewHelper.setRotationX(menuView, menuWidth * scale * 0.8f);
         ViewHelper.setScaleX(menuView, leftScale);
-        ViewHelper.setScaleY(menuView, rightScale);
+        ViewHelper.setScaleY(menuView, leftScale);
         ViewHelper.setAlpha(menuView, leftAlpha);
 
         // 设置content的缩放的中心点
@@ -210,7 +211,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         ViewHelper.setScaleY(contentView, rightScale);
     }
 
-*/
+
     public void toggle(){
         if(isOpen){
             closeMenu();

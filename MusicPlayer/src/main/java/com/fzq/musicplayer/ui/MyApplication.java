@@ -16,8 +16,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        //程序启动时遍历手机中的music文件
         MusicUtil.getIntance().getGlobalMusicList(this);
 
+        //初始化SharedPreferences
         SharedPreferensUtil.getInstance(this);
     }
 }

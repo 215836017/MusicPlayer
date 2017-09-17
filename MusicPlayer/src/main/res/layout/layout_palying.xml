@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_bottom_playingBar"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-
+    android:background="#FF048CCF"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="2dp"
         android:background="#00ffff" />
 
     <LinearLayout
@@ -16,58 +17,67 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/layout_playingBar_image_album"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher_round" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <SeekBar
+                android:id="@+id/layout_playingBar_seekBar_progress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp" />
 
             <TextView
-                android:id="@+id/text_geshou"
+                android:id="@+id/layout_playingBar_text_singer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:text="未知歌手" />
 
             <TextView
+                android:id="@+id/layout_playingBar_text_musicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/text_geshou"
+                android:layout_above="@id/layout_playingBar_text_singer"
                 android:layout_marginLeft="10dp"
                 android:text="歌曲名字" />
 
-            <TextView
-                android:id="@+id/text_liebiao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/layout_playingBar_image_liebiao"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:text="列表" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/songplayer_menu" />
 
-            <TextView
-                android:id="@+id/text_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/layout_playingBar_image_next"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/text_liebiao"
-                android:text="Next" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/layout_playingBar_image_liebiao"
+                android:src="@drawable/setting_right_icon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/layout_playingBar_image_play"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/text_next"
-                android:text="暂停" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/layout_playingBar_image_next"
+                android:src="@drawable/songplayer_player" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
