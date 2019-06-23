@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.actvities.menus.SettingActivity"></activity>
-        <activity android:name=".ui.actvities.LoginActivity" />
+        <activity android:name=".ui.actvities.LoginActivity"></activity>
+        <activity android:name=".ui.actvities.AgreementActivity" />
+        <activity android:name=".ui.actvities.menus.SettingActivity" />
+        <activity android:name=".ui.actvities.ChoseLoginModeActivity" />
         <activity android:name=".ui.actvities.menus.MusicMarketActivity" />
         <activity android:name=".ui.actvities.menus.ChildrenAreaActivity" />
         <activity android:name=".ui.actvities.menus.SoundsActivity" />
@@ -43,7 +45,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.actvities.AppMainActivity" />
-
     </application>
 
 </manifest>

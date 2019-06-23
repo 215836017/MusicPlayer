@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_showAgreement_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录代表你同意"
+        android:textColor="#96979A"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/showAgreementLayout_text_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="酷狗服务"
+        android:textColor="#0089F1"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="和"
+        android:textColor="#96979A"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/showAgreementLayout_text_private"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="隐私条款"
+        android:textColor="#0089F1"
+        android:textSize="13sp" />
+</LinearLayout>

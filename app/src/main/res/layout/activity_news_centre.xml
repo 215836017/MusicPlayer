@@ -7,7 +7,7 @@
     tools:context=".ui.actvities.menus.NewsCentreActivity">
 
     <RelativeLayout
-        android:id="@+id/newsCentreAct_layout_top"
+        android:id="@+id/settingAct_layout_top"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/newsCentreAct_image_back"
+            android:id="@+id/settingAct_image_back"
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"
@@ -24,12 +24,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/newsCentreAct_image_back"
+            android:layout_toRightOf="@id/settingAct_image_back"
             android:text="消息中心"
             android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/newsCentreAct_image_moreSettings"
+            android:id="@+id/settingAct_image_moreSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -37,17 +37,17 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/newsCentreAct_layout_pages"
+        android:id="@+id/settingAct_layout_pages"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsCentreAct_layout_top">
+        app:layout_constraintTop_toBottomOf="@+id/settingAct_layout_top">
 
         <TextView
-            android:id="@+id/newsCentreAct_text_siXin"
+            android:id="@+id/settingAct_text_siXin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/newsCentreAct_text_pingLun"
+            android:id="@+id/settingAct_text_pingLun"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,7 +67,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/newsCentreAct_text_zan"
+            android:id="@+id/settingAct_text_zan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,21 +79,21 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/newsCentreAct_layout_view"
+        android:id="@+id/settingAct_layout_view"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="1dp"
         android:background="#00f"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsCentreAct_layout_pages" />
+        app:layout_constraintTop_toBottomOf="@+id/settingAct_layout_pages" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/newsCentreAct_layout_viewPager"
+        android:id="@+id/settingAct_layout_viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsCentreAct_layout_view" />
+        app:layout_constraintTop_toBottomOf="@+id/settingAct_layout_view" />
 </android.support.constraint.ConstraintLayout>

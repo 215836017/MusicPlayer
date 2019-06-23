@@ -26,3 +26,7 @@
 2. 完善了消息中心(NewsCentreActivity.java)中的部分代码，并且添加了NewsCentreActivity.java的相关Fragments
 
 2019.05.27
+
+1. 主要完成了程序启动的登录界面到注解的流程
+
+2019.06.07

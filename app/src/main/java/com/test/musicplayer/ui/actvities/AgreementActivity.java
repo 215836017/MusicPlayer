@@ -1,17 +1,60 @@
-<resources>
+package com.test.musicplayer.ui.actvities;
 
-    <string name="app_name">MusicPlayer</string>
-    <string name="app_version">MusicPlayer_V0.0.1</string>
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-    <string name="text_skip">跳过</string>
-    <string name="enter_app">进入播放器</string>
-    <string name="mainAct_readMe">预留界面</string>
-    <string name="mainAct_btn">进入Local Music</string>
-    <string name="title_activity_time_closure">TimeClosureActivity</string>
+import com.test.musicplayer.R;
+import com.test.musicplayer.utils.ToastUtil;
 
+public class AgreementActivity extends AppCompatActivity {
 
-    <string name="kugou_service">
-酷狗用户服务协议\n
+    public static final String EXTRA_KUGOU_MSG = "extra_kugou_msg";
+    public static final String EXTRA_KUGOU_SERVICE = "extra_kugou_service";
+    public static final String EXTRA_KUGOU_PRIVATE = "extra_kugou_private";
+
+    private final String TITLE_SERVICE = "酷狗服务";
+    private final String TITLE_PRIVATE = "隐私条款";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_agreement);
+
+        Intent intent = getIntent();
+        String extra = intent.getStringExtra(EXTRA_KUGOU_MSG);
+
+        initView(extra);
+    }
+
+    public void clickToBack(View view) {
+        if (view.getId() == R.id.AgreementAct_image_back) {
+            finish();
+        }
+    }
+
+    private void initView(String extra) {
+        TextView textTitle = findViewById(R.id.AgreementAct_text_title);
+        TextView textContent = findViewById(R.id.AgreementAct_text_content);
+
+        if (extra.equals(EXTRA_KUGOU_SERVICE)) {
+            textTitle.setText(TITLE_SERVICE);
+            textContent.setText(getString(R.string.kugou_service));  //TODO 应该要使用WebView来加载文字的
+
+        } else if (extra.equals(EXTRA_KUGOU_PRIVATE)) {
+            textTitle.setText(TITLE_PRIVATE);
+            textContent.setText(getString(R.string.kugou_private)); //TODO 应该要使用WebView来加载文字的
+
+        } else {
+            ToastUtil.showToast(this, "协议获取失败");
+            finish();
+        }
+    }
+}
+/*
+酷狗用户服务协议
 1.特别提醒
 1.1.在您开始阅读并决定是否接受《酷狗用户服务协议》（以下称“本协议”）之前，酷狗公司特别提醒您应留意本协议中加粗形式的条款内容。
 1.2.除非您已阅读并接受本协议所有条款，否则您无权使用本服务。您对本服务的登录、查看、下载、发布信息、使用等行为即视为您已阅读并同意受本协议的约束。
@@ -67,11 +110,9 @@
 （4）制作、发布、传播用于窃取他人帐号及他人专属信息、财产、保密信息的软件；
 （5）在未经酷狗公司书面明确授权前提下，出售、出租、出借、散布、转移或转授权本软件和本服务或相关的链接或从使用软件和服务或软件和服务的条款中获利，无论以上使用是否为直接经济或金钱收益；
 （6）未经酷狗公司允许，擅自将本“软件”、本服务的音乐内容资源库中的任何音乐资源应用于商业用途或进行营利活动；
-    </string>
 
-    <string name="kugou_private">
 
-酷狗隐私政策\n
+酷狗隐私政策
 引言
 您在使用我们的服务时，我们可能会收集和使用您的相关信息。我们希望通过本《隐私政策》向您说明，在使用我们的服务时，我们如何收集、使用、储存、分享和保护这些信息，以及我们为您提供的了解、更新、控制和保护这些信息的方式。 您使用或继续使用酷狗的服务，视为您同意酷狗按照本《隐私政策》收集、使用、储存、分享和保护您的信息。请您仔细阅读并按照本《隐私政策》的指引，作出您认为适当的选择。
 本《隐私政策》为《酷狗用户服务协议》的重要组成部分，适用于酷狗相关服务。本《隐私政策》未提及或未明示的内容，均以《酷狗用户服务协议》为准。本《隐私政策》解释了用户信息收集和使用的有关情况，与您所使用的酷狗服务密切相关。因此，请您审慎阅读本《隐私政策》。
@@ -93,6 +134,4 @@
 Cookie以及相关技术的使用
 为使您获得更轻松的访问体验，您访问我们的相关网站或使用我们提供的服务时，我们可能会通过小型数据文件识别您的身份，这么做是帮您省去重复输入注册信息的步骤，或者帮助判断您的账户安全。这些数据文件可能是Cookie，Flash Cookie，或您的浏览器或关联应用程序提供的其他本地存储（统称“Cookie”）。
 请您理解，我们的某些服务只能通过使用“Cookie”才可得到实现。如果您的浏览器或浏览器附加服务允许，您可以修改对Cookie的接受程度或者拒绝Cookie，但这一举动在某些情况下可能会影响您安全访问我们相关网站和使用平台提供的服务。
-
-    </string>
-</resources>
+ */

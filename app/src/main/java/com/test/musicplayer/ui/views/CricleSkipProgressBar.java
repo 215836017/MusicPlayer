@@ -8,8 +8,11 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.test.musicplayer.utils.LogUtil;
+
 public class CricleSkipProgressBar extends View {
 
+    private final String tag = "CricleSkipProgressBar.java";
     private Paint paint;
 
     private int roundWidth;
@@ -51,7 +54,7 @@ public class CricleSkipProgressBar extends View {
         roundColor = 0xfffdba14;
         roundProgressColor = 0xfffc8b0d;
         textColor = 0xff00ff00;
-        textSize = 15;
+        textSize = 25;
         roundWidth = 5;
         maxProgress = 100;
 
@@ -81,6 +84,7 @@ public class CricleSkipProgressBar extends View {
         canvas.drawArc(oval, 0, 360 * currentProgress / maxProgress,
                 false, paint);  // 根据进度画圆弧
 
+        LogUtil.i(tag, "onDraw() -- timeSecond = " + timeSecond);
         //3. 画中心的文字
         paint.setStrokeWidth(0);
         paint.setColor(textColor);
@@ -108,6 +112,7 @@ public class CricleSkipProgressBar extends View {
 
     public void stopAnim() {
         isStrartAnim = false;
+
     }
 
     public void setOnProgressAnimListener(OnProgressAnimListener listener) {
@@ -133,6 +138,7 @@ public class CricleSkipProgressBar extends View {
                             break;
                         }
                         timeSecond--;
+                        sleepCount = 1;
                     }
                     currentProgress += range;
                 } catch (Exception e) {

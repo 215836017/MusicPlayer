@@ -18,6 +18,7 @@ import com.test.musicplayer.ui.actvities.menus.SettingActivity;
 import com.test.musicplayer.ui.adapters.MenuRecyclerAdapter;
 import com.test.musicplayer.ui.menu.MenuListData;
 import com.test.musicplayer.ui.recycler.RecyclerDecoration;
+import com.test.musicplayer.utils.LogUtil;
 
 /**
  * 参考链接：
@@ -32,7 +33,7 @@ import com.test.musicplayer.ui.recycler.RecyclerDecoration;
  */
 public class AppMainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final String TAG = "AppMainActivity.java";
+    private final String tag = "AppMainActivity.java";
 
     // -------------- left menu -------------
     private RecyclerView menuRecyclerView;
@@ -60,6 +61,7 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initLeftMenuViews() {
+        LogUtil.i(tag, "initLeftMenuViews() -- start...");
         menuRecyclerView = findViewById(R.id.mainAct_leftMenu_recyclerView);
         layoutSetting = findViewById(R.id.mainAct_leftMenu_bottomLayout_setting);
         layoutExitLogin = findViewById(R.id.mainAct_leftMenu_bottomLayout_exitLogin);
@@ -110,7 +112,7 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.mainAct_leftMenu_bottomLayout_exitLogin:
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivity(new Intent(this, ChoseLoginModeActivity.class));
                 break;
 
             case R.id.mainAct_leftMenu_bottomLayout_close:

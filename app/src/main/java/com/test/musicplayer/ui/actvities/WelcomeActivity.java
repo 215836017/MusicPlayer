@@ -19,7 +19,7 @@ import com.test.musicplayer.utils.SPUtil;
  */
 public class WelcomeActivity extends AppCompatActivity implements CricleSkipProgressBar.OnProgressAnimListener, View.OnClickListener {
 
-    private final String TAG = "WelcomeActivity.java";
+    private final String tag = "WelcomeActivity.java";
 
     private CricleSkipProgressBar cricleSkipProgressBar;
 
@@ -34,6 +34,7 @@ public class WelcomeActivity extends AppCompatActivity implements CricleSkipProg
     private void checkNeedShowNewVersionActivity() {
         String appVersion = getString(R.string.app_version);
         if (!SPUtil.get(this, SPConstants.SP_FIRST_NEW_VERSION_START, "").equals(appVersion)) {
+            LogUtil.d(tag, "checkNeedShowNewVersionActivity() -- start NewVersionStartActivity");
             startActivity(new Intent(this, NewVersionStartActivity.class));
             finish();
 
@@ -44,9 +45,11 @@ public class WelcomeActivity extends AppCompatActivity implements CricleSkipProg
     }
 
     private void init() {
+        LogUtil.i(tag, "init() -- start...");
         // 还有一个闪屏页面
         cricleSkipProgressBar = findViewById(R.id.welcomeAct_skipBar);
 
+        cricleSkipProgressBar.setMaxProgress(4);
         cricleSkipProgressBar.setOnProgressAnimListener(this);
         cricleSkipProgressBar.setOnClickListener(this);
 
@@ -55,21 +58,23 @@ public class WelcomeActivity extends AppCompatActivity implements CricleSkipProg
 
     @Override
     public void progressAnimFinish() {
-        goToMainAct();
+        LogUtil.i(tag, "progressAnimFinish() -- call finishWelcomAct()");
+        finishWelcomAct();
     }
 
     @Override
     public void onClick(View v) {
-        goToMainAct();
+        cricleSkipProgressBar.stopAnim();
+        finishWelcomAct();
     }
 
-    private void goToMainAct() {
+    private void finishWelcomAct() {
         boolean hasLogin = (boolean) SPUtil.get(this, SPConstants.SP_HAS_LOGIN, false);
-        LogUtil.i(TAG, "goToMainAct() -- hasLogin = " + hasLogin);
+        LogUtil.i(tag, "finishWelcomAct() -- hasLogin = " + hasLogin);
         if (hasLogin) {
             startActivity(new Intent(this, AppMainActivity.class));
         } else {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, ChoseLoginModeActivity.class));
         }
 
         finish();
