@@ -1,1 +1,1 @@
-include ':MusicPlayer'
+include ':app'

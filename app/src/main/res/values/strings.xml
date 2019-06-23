@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">MusicPlayer</string>
+
+    <string name="mainAct_readMe">预留界面</string>
+    <string name="mainAct_btn">进入Local Music</string>
+</resources>
