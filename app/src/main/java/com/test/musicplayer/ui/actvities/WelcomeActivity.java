@@ -33,7 +33,7 @@ public class WelcomeActivity extends AppCompatActivity implements CricleSkipProg
 
     private void checkNeedShowNewVersionActivity() {
         String appVersion = getString(R.string.app_version);
-        if (SPUtil.get(this, SPConstants.SP_FIRST_NEW_VERSION_START, "").equals(appVersion)) {
+        if (!SPUtil.get(this, SPConstants.SP_FIRST_NEW_VERSION_START, "").equals(appVersion)) {
             startActivity(new Intent(this, NewVersionStartActivity.class));
             finish();
 

@@ -44,8 +44,9 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_version_start);
 
-        initViews();
+        SPUtil.put(this, SPConstants.SP_FIRST_NEW_VERSION_START, getString(R.string.app_version));
         initDatas();
+        initViews();
     }
 
 
@@ -66,11 +67,14 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
         cricleImages[2] = imageCricle_03;
         cricleImages[3] = imageCricle_04;
 
-        imageSwitcher.setImageResource(imageRes[imageIndex]);
         // 设置动画效果
-        imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
-        imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
-
+        // imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
+        //  imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
+       /*
+        imageSwitcher.setImageResource(imageRes[imageIndex]); 放在 imageSwitcher.setFactory前面会报如下错误：
+         Caused by: java.lang.NullPointerException
+        at android.widget.ImageSwitcher.setImageResource(ImageSwitcher.java:41)
+        */
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -79,7 +83,7 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
                 return imageView;
             }
         });
-
+        imageSwitcher.setImageResource(imageRes[imageIndex]);
     }
 
     private void initDatas() {
@@ -92,11 +96,11 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         if (v.getId() == R.id.newVersionStartAct_text_skip || v.getId() == R.id.newVersionStartAct_text_start) {
             startActivity(new Intent(this, AppMainActivity.class));
-
-            SPUtil.put(this, SPConstants.SP_FIRST_NEW_VERSION_START, getString(R.string.app_version));
             this.finish();
         }
     }
+
+    private boolean isDown = false;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -104,28 +108,30 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x_down = (int) event.getX();
+                isDown = true;
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 x_move = (int) event.getX();
-                if ((x_move - x_down) >= distance2Change) {
+                if (isDown && (x_down - x_move) >= distance2Change) {
                     // to right
+                    isDown = false;
                     if (imageIndex < (imageRes.length - 1)) {
                         imageIndex++;
-                    } else {
-                        return true;
+                        imageSwitcher.setImageResource(imageRes[imageIndex]);
+                        changeCricleImage();
                     }
 
-                } else if ((x_down - x_move) >= distance2Change) {
+                } else if (isDown && (x_move - x_down) >= distance2Change) {
                     // to left
+                    isDown = false;
                     if (imageIndex > 0) {
                         imageIndex--;
-                    } else {
-                        return true;
+                        imageSwitcher.setImageResource(imageRes[imageIndex]);
+                        changeCricleImage();
                     }
                 }
-                imageSwitcher.setImageResource(imageRes[imageIndex]);
-                changeCricleImage();
+
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -141,7 +147,10 @@ public class NewVersionStartActivity extends AppCompatActivity implements View.O
 
         if ((cricleImages.length - 1) == imageIndex) {
             textStartApp.setVisibility(View.VISIBLE);
+        } else {
+            textStartApp.setVisibility(View.GONE);
         }
+
         for (int i = 0; i < cricleImages.length; i++) {
             if (i == imageIndex) {
                 cricleImages[i].setImageResource(R.drawable.btn_radio_on_holo_light);

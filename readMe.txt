@@ -20,3 +20,9 @@
 1. 主要完成了主界面中左侧菜单选项部分的代码。
 
 2019.05.26
+
+1. 主要修改了NewVersionStartActivity.java的代码
+
+2. 完善了消息中心(NewsCentreActivity.java)中的部分代码，并且添加了NewsCentreActivity.java的相关Fragments
+
+2019.05.27
