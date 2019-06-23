@@ -19,10 +19,13 @@ import com.test.musicplayer.ui.actvities.menus.*;
 import com.test.musicplayer.ui.menu.MenuBean;
 import com.test.musicplayer.ui.menu.MenuItemTag;
 import com.test.musicplayer.ui.views.MsgTipView;
+import com.test.musicplayer.utils.LogUtil;
 
 import java.util.List;
 
 public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapter.ViewHolder> {
+
+    private final String TAG = "MenuRecyclerAdapter.java";
 
     private Context context;
     private List<MenuBean> datas;
@@ -64,14 +67,23 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
 
             if ((menuTag == MenuItemTag.MENU_TAG_DESKTOP_LYRIC)
                     || (menuTag == MenuItemTag.MENU_TAG_LOCK_SCREEN_LYRIC)) {
+                LogUtil.i(TAG, "onBindViewHolder() -- pos = " + pos + ", menuTag = " + menuTag);
+                holder.layoutRoot.setClickable(false);
                 holder.switchView.setVisibility(View.VISIBLE);
                 holder.layoutRight.setVisibility(View.GONE);
-                holder.layoutRoot.setClickable(false);
-            } else {
 
+                holder.switchView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickSwitch(pos);
+                    }
+                });
+
+            } else {
+                holder.layoutRoot.setClickable(true);
                 holder.switchView.setVisibility(View.GONE);
                 holder.layoutRight.setVisibility(View.VISIBLE);
-                holder.layoutRoot.setClickable(true);
+
 
                 String menuSepplement = menuBean.getMenuSepplement();
                 if (TextUtils.isEmpty(menuSepplement)) {
@@ -91,22 +103,17 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
                 } else {
                     // TODO   holder.tipViewRight.setMsgCount(sepplementMsgCount);
                 }
+
+
+                holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickRootLayout(pos);
+                    }
+                });
             }
         }
 
-        holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickRootLayout(pos);
-            }
-        });
-
-        holder.switchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickSwitch(pos);
-            }
-        });
     }
 
     @Override
@@ -115,6 +122,7 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
     }
 
     private void clickRootLayout(int pos) {
+        LogUtil.i(TAG, "clickRootLayout() -- pos = " + pos);
         Intent intent = new Intent();
         switch (datas.get(pos).getMenuItemTag()) {
             case MenuItemTag.MENU_TAG_NEWS_CENTRE:
@@ -174,11 +182,16 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
     }
 
     private void clickSwitch(int pos) {
+        LogUtil.i(TAG, "clickSwitch() -- pos = " + pos);
         switch (datas.get(pos).getMenuItemTag()) {
             case MenuItemTag.MENU_TAG_DESKTOP_LYRIC:
+                LogUtil.i(TAG, "clickSwitch() -- MenuItemTag.MENU_TAG_DESKTOP_LYRIC = "
+                        + MenuItemTag.MENU_TAG_DESKTOP_LYRIC);
                 break;
 
             case MenuItemTag.MENU_TAG_LOCK_SCREEN_LYRIC:
+                LogUtil.i(TAG, "clickSwitch() -- MenuItemTag.MENU_TAG_LOCK_SCREEN_LYRIC = "
+                        + MenuItemTag.MENU_TAG_LOCK_SCREEN_LYRIC);
                 break;
         }
     }

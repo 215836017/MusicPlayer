@@ -8,11 +8,18 @@ import android.view.View;
 import com.test.musicplayer.R;
 import com.test.musicplayer.constants.SPConstants;
 import com.test.musicplayer.ui.views.CricleSkipProgressBar;
+import com.test.musicplayer.utils.LogUtil;
 import com.test.musicplayer.utils.SPUtil;
 
+/**
+ * 1. 闪屏页
+ * 2. “跳过”动画
+ * 3. 登录界面
+ * 4. 如果关闭登录界面，则进入主界面
+ */
 public class WelcomeActivity extends AppCompatActivity implements CricleSkipProgressBar.OnProgressAnimListener, View.OnClickListener {
 
-    private final String tag = "WelcomeActivity.java";
+    private final String TAG = "WelcomeActivity.java";
 
     private CricleSkipProgressBar cricleSkipProgressBar;
 
@@ -57,7 +64,13 @@ public class WelcomeActivity extends AppCompatActivity implements CricleSkipProg
     }
 
     private void goToMainAct() {
-        startActivity(new Intent(this, AppMainActivity.class));
+        boolean hasLogin = (boolean) SPUtil.get(this, SPConstants.SP_HAS_LOGIN, false);
+        LogUtil.i(TAG, "goToMainAct() -- hasLogin = " + hasLogin);
+        if (hasLogin) {
+            startActivity(new Intent(this, AppMainActivity.class));
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
         finish();
     }

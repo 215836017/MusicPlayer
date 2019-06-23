@@ -22,6 +22,16 @@ public class MusicRecyclerView extends RecyclerView {
     }
 
     private void init() {
-
+        //创建线性布局
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        //设置为垂直方向 跟进源码可知：1是vertical， 0是horizontal
+//        layoutManager.setOrientation(OrientationHelper.VERTICAL);
+//
+//        recyclerView.setLayoutManager(layoutManager);
+//        SecondAdapter adapter = new SecondAdapter(this, nameList);
+//        recyclerView.addItemDecoration(new FirstDecoration(this, 1));
+//
+//        recyclerView.setAdapter(adapter);
     }
+
 }

@@ -23,6 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="Menu" />
 
@@ -31,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="me" />
 
@@ -39,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="ting" />
 
@@ -47,6 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="kan" />
 
@@ -55,6 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="chang" />
 
@@ -63,6 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="More" />
     </LinearLayout>

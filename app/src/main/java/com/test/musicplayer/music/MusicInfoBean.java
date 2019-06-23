@@ -163,4 +163,5 @@ public class MusicInfoBean {
                 ", lrcSize='" + lrcSize + '\'' +
                 '}';
     }
+
 }

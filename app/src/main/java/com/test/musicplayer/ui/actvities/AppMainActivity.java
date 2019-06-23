@@ -2,15 +2,22 @@ package com.test.musicplayer.ui.actvities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.test.musicplayer.R;
+import com.test.musicplayer.ui.actvities.menus.SettingActivity;
 import com.test.musicplayer.ui.adapters.MenuRecyclerAdapter;
 import com.test.musicplayer.ui.menu.MenuListData;
+import com.test.musicplayer.ui.recycler.RecyclerDecoration;
 
 /**
  * 参考链接：
@@ -25,13 +32,14 @@ import com.test.musicplayer.ui.menu.MenuListData;
  */
 public class AppMainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final String tag = "AppMainActivity.java";
+    private final String TAG = "AppMainActivity.java";
 
     // -------------- left menu -------------
     private RecyclerView menuRecyclerView;
-    private LinearLayout layoutSetting, layoutExit, layoutClose;
+    private LinearLayout layoutSetting, layoutExitLogin, layoutClose;
 
     // -------------- right main -------------
+    private DrawerLayout drawerLayout;
     private TextView imageMenu;
     private TextView textMe, textTing, textKan, textChang;
     private TextView imageMore;
@@ -54,21 +62,24 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
     private void initLeftMenuViews() {
         menuRecyclerView = findViewById(R.id.mainAct_leftMenu_recyclerView);
         layoutSetting = findViewById(R.id.mainAct_leftMenu_bottomLayout_setting);
-        layoutExit = findViewById(R.id.mainAct_leftMenu_bottomLayout_exit);
+        layoutExitLogin = findViewById(R.id.mainAct_leftMenu_bottomLayout_exitLogin);
         layoutClose = findViewById(R.id.mainAct_leftMenu_bottomLayout_close);
 
         layoutSetting.setOnClickListener(this);
-        layoutExit.setOnClickListener(this);
+        layoutExitLogin.setOnClickListener(this);
         layoutClose.setOnClickListener(this);
 
-//        menuRecyclerView.setItemAnimator();
-//        menuRecyclerView.setLayoutManager();
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(OrientationHelper.VERTICAL);
+        menuRecyclerView.setLayoutManager(layoutManager);
+        menuRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        menuRecyclerView.addItemDecoration(new RecyclerDecoration(this, OrientationHelper.HORIZONTAL));
         MenuRecyclerAdapter menuAdapter = new MenuRecyclerAdapter(this, MenuListData.getInstance().getMenuDatas());
         menuRecyclerView.setAdapter(menuAdapter);
     }
 
     private void initMainViews() {
+        drawerLayout = findViewById(R.id.mainAct_drawerLayout);
         imageMenu = findViewById(R.id.mainAct_text_menu);
         textMe = findViewById(R.id.mainAct_text_me);
         textTing = findViewById(R.id.mainAct_text_ting);
@@ -95,12 +106,19 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
 
         switch (v.getId()) {
             case R.id.mainAct_leftMenu_bottomLayout_setting:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
 
-            case R.id.mainAct_leftMenu_bottomLayout_exit:
+            case R.id.mainAct_leftMenu_bottomLayout_exitLogin:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+
+            case R.id.mainAct_leftMenu_bottomLayout_close:
+                exitApp();
                 break;
 
             case R.id.mainAct_text_menu:
+                drawerLayout.openDrawer(Gravity.LEFT);
                 break;
 
             case R.id.mainAct_text_me:
@@ -120,9 +138,13 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.mainAct_searchView:
                 break;
-
-
         }
     }
 
+    /**
+     * 完全退出整个程序
+     */
+    private void exitApp() {
+
+    }
 }

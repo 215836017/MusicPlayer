@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.actvities.menus.MusicMarketActivity"></activity>
+        <activity android:name=".ui.actvities.menus.SettingActivity"></activity>
+        <activity android:name=".ui.actvities.LoginActivity" />
+        <activity android:name=".ui.actvities.menus.MusicMarketActivity" />
         <activity android:name=".ui.actvities.menus.ChildrenAreaActivity" />
         <activity android:name=".ui.actvities.menus.SoundsActivity" />
         <activity android:name=".ui.actvities.menus.DrivingModeActivity" />
