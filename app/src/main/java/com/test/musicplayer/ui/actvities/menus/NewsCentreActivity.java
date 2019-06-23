@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.test.musicplayer.R;
-import com.test.musicplayer.ui.fragments.setting.FragPingLun;
-import com.test.musicplayer.ui.fragments.setting.FragSiXin;
-import com.test.musicplayer.ui.fragments.setting.FragZan;
+import com.test.musicplayer.ui.fragments.newsCenter.FragPingLun;
+import com.test.musicplayer.ui.fragments.newsCenter.FragSiXin;
+import com.test.musicplayer.ui.fragments.newsCenter.FragZan;
 import com.test.musicplayer.utils.LogUtil;
 
 public class NewsCentreActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,12 +46,12 @@ public class NewsCentreActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initViews() {
-        imageBack = findViewById(R.id.settingAct_image_back);
-        imageMore = findViewById(R.id.settingAct_image_moreSettings);
-        textSiXin = findViewById(R.id.settingAct_text_siXin);
-        textPingLun = findViewById(R.id.settingAct_text_pingLun);
-        textZan = findViewById(R.id.settingAct_text_zan);
-        viewPager = findViewById(R.id.settingAct_layout_viewPager);
+        imageBack = findViewById(R.id.newsCentreAct_image_back);
+        imageMore = findViewById(R.id.newsCentreAct_image_moreSettings);
+        textSiXin = findViewById(R.id.newsCentreAct_text_siXin);
+        textPingLun = findViewById(R.id.newsCentreAct_text_pingLun);
+        textZan = findViewById(R.id.newsCentreAct_text_zan);
+        viewPager = findViewById(R.id.newsCentreAct_layout_viewPager);
 
         imageBack.setOnClickListener(this);
         imageMore.setOnClickListener(this);
@@ -81,20 +81,20 @@ public class NewsCentreActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.settingAct_image_back:
+            case R.id.newsCentreAct_image_back:
                 this.finish();
                 break;
 
-            case R.id.settingAct_image_moreSettings:
+            case R.id.newsCentreAct_image_moreSettings:
                 break;
 
-            case R.id.settingAct_text_siXin:
+            case R.id.newsCentreAct_text_siXin:
                 break;
 
-            case R.id.settingAct_text_pingLun:
+            case R.id.newsCentreAct_text_pingLun:
                 break;
 
-            case R.id.settingAct_text_zan:
+            case R.id.newsCentreAct_text_zan:
                 break;
 
         }

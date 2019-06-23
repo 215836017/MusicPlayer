@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0090FF"
     tools:context=".ui.actvities.AppMainActivity">
 
     <LinearLayout
@@ -18,58 +19,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_menu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_menu"
             android:text="Menu" />
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_me"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_me"
             android:text="me" />
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_ting"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_hear"
             android:text="ting" />
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_kan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_watch"
             android:text="kan" />
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_chang"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_sing"
             android:text="chang" />
 
-        <TextView
+        <ImageView
             android:id="@+id/mainAct_text_more"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
+            android:src="@drawable/icon_more"
             android:text="More" />
     </LinearLayout>
 
@@ -82,6 +83,7 @@
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
         android:text="search"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainAct_layout_top" />
@@ -90,7 +92,7 @@
         android:id="@+id/mainAct_viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="0dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

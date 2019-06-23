@@ -1,7 +1,10 @@
 package com.test.musicplayer.ui.actvities;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,15 +13,24 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.test.musicplayer.R;
 import com.test.musicplayer.ui.actvities.menus.SettingActivity;
 import com.test.musicplayer.ui.adapters.MenuRecyclerAdapter;
+import com.test.musicplayer.ui.fragments.FragListen;
+import com.test.musicplayer.ui.fragments.FragMe;
+import com.test.musicplayer.ui.fragments.FragSing;
+import com.test.musicplayer.ui.fragments.FragWatch;
+import com.test.musicplayer.ui.fragments.FragmentAdapter;
 import com.test.musicplayer.ui.menu.MenuListData;
 import com.test.musicplayer.ui.recycler.RecyclerDecoration;
 import com.test.musicplayer.utils.LogUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 参考链接：
@@ -30,6 +42,11 @@ import com.test.musicplayer.utils.LogUtil;
  * https://www.cnblogs.com/JLZT1223/p/8108783.html
  * https://blog.csdn.net/Danna_lucky/article/details/50907644
  * https://github.com/agxxxx/AIDLMusicPlayer
+ *
+ *
+ * 关于Android 悬浮窗问题以及仿网易云音乐底部播放控制栏实现
+ * https://blog.csdn.net/canra/article/details/79393377
+ * https://blog.csdn.net/zhangphil/article/details/51038080
  */
 public class AppMainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,18 +58,43 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
 
     // -------------- right main -------------
     private DrawerLayout drawerLayout;
-    private TextView imageMenu;
-    private TextView textMe, textTing, textKan, textChang;
-    private TextView imageMore;
+    private ImageView imageMenu;
+    private ImageView textMe, textTing, textKan, textChang;
+    private ImageView imageMore;
     private TextView searchVIew;
+    private ViewPager viewPager;
+
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private FragMe fragMe;
+    private FragListen fragListen;
+    private FragSing fragSing;
+    private FragWatch fragWatch;
+
+    private final int FRAG_INDEX_ME = 0;
+    private final int FRAG_INDEX_HEAR = 0;
+    private final int FRAG_INDEX_WATCH = 0;
+    private final int FRAG_INDEX_SING = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
         initFragments();
+        initViews();
+
+    }
+
+    private void initFragments() {
+        fragMe = new FragMe();
+        fragListen = new FragListen();
+        fragWatch = new FragWatch();
+        fragSing = new FragSing();
+
+        fragmentList.add(fragMe);
+        fragmentList.add(fragListen);
+        fragmentList.add(fragWatch);
+        fragmentList.add(fragSing);
     }
 
     private void initViews() {
@@ -89,6 +131,7 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
         textChang = findViewById(R.id.mainAct_text_chang);
         imageMore = findViewById(R.id.mainAct_text_more);
         searchVIew = findViewById(R.id.mainAct_searchView);
+        viewPager = findViewById(R.id.mainAct_viewPager);
 
         imageMenu.setOnClickListener(this);
         textMe.setOnClickListener(this);
@@ -97,11 +140,29 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
         textChang.setOnClickListener(this);
         imageMore.setOnClickListener(this);
         searchVIew.setOnClickListener(this);
+
+        changeFragment(FRAG_INDEX_HEAR);
+        viewPager.setCurrentItem(FRAG_INDEX_HEAR);
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(fragmentAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
-    private void initFragments() {
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -124,15 +185,19 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.mainAct_text_me:
+                changeFragment(FRAG_INDEX_ME);
                 break;
 
             case R.id.mainAct_text_ting:
+                changeFragment(FRAG_INDEX_HEAR);
                 break;
 
             case R.id.mainAct_text_kan:
+                changeFragment(FRAG_INDEX_WATCH);
                 break;
 
             case R.id.mainAct_text_chang:
+                changeFragment(FRAG_INDEX_SING);
                 break;
 
             case R.id.mainAct_text_more:
@@ -147,6 +212,10 @@ public class AppMainActivity extends AppCompatActivity implements View.OnClickLi
      * 完全退出整个程序
      */
     private void exitApp() {
+
+    }
+
+    private void changeFragment(int fragIndex) {
 
     }
 }

@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.test.musicplayer.R;
 import com.test.musicplayer.utils.ToastUtil;
 
+/**
+ * 参考链接
+ * https://www.cnblogs.com/popfisher/p/5191242.html
+ */
 public class AgreementActivity extends AppCompatActivity {
 
     public static final String EXTRA_KUGOU_MSG = "extra_kugou_msg";

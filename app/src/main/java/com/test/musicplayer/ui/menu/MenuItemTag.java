@@ -68,21 +68,21 @@ public class MenuItemTag {
 
 
     public static final int[] MENU_ICONS = {
-            R.drawable.test_emo_im_news_centre,
-            R.drawable.test_emo_im_skin_centre,
-            R.drawable.test_emo_im_vip_centre,
-            R.drawable.test_emo_im_flow_monthly,
-            R.drawable.test_emo_im_private_cloud,
-            R.drawable.test_emo_im_time_closure,
-            R.drawable.test_emo_im_viper_sound_effect,
-            R.drawable.test_emo_im_listen_know_music,
-            R.drawable.test_emo_im_music_tools,
-            R.drawable.test_emo_im_driving_mode,
-            R.drawable.test_emo_im_sounds,
-            R.drawable.test_emo_im_children_area,
-            R.drawable.test_emo_im_music_market,
-            R.drawable.test_emo_im_desktop_lyric,
-            R.drawable.test_emo_im_lock_screen_lyric
+            R.drawable.icon_menu_msg,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_time_closure,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_listen_and_know,
+            R.drawable.icon_menu_music_tools,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_rings,
+            R.drawable.icon_menu_child,
+            R.drawable.icon_menu_kugou_market,
+            R.drawable.icon_menu_flow,
+            R.drawable.icon_menu_flow
     };
 
 }
