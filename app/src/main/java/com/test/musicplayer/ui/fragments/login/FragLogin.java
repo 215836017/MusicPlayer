@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,21 @@ public class FragLogin extends Fragment implements View.OnClickListener {
     private Context context;
     private int loginType;
 
+    private OnLoginResult onLoginResult;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        LogUtil.d(tag, "onAttach() -- start...");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.d(tag, "onCreate() -- start...");
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,10 +88,64 @@ public class FragLogin extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LogUtil.d(tag, "onActivityCreated() -- start...");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.d(tag, "onStart() -- start...");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.d(tag, "onResume() -- start...");
+        setFragType();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtil.d(tag, "onPause() -- start...");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.d(tag, "onStop() -- start...");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogUtil.d(tag, "onDestroyView() -- start...");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.d(tag, "onDestroy() -- start...");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.d(tag, "onDetach() -- start...");
+    }
+
     public void setViewType(int viewType) {
         LogUtil.d(tag, "setViewType() -- start, viewType = " + viewType);
         loginType = viewType;
-        if (viewType == LOGIN_TYPE_PHONE) {
+    }
+
+    private void setFragType() {
+        LogUtil.d(tag, "setFragType() -- start, loginType = " + loginType);
+        if (loginType == LOGIN_TYPE_PHONE) {
             textUserName.setText(USERNAME_PHONE);
             editUserName.setHint(USERNAME_HINT_PHONE);
             layoutPhone.setVisibility(View.VISIBLE);
@@ -90,7 +160,7 @@ public class FragLogin extends Fragment implements View.OnClickListener {
             editVerificationCode.setHint(PWD_HINT_PHONE);
             textForgetPwd.setVisibility(View.GONE);
 
-        } else if (viewType == LOGIN_TYPE_ACCOUNT) {
+        } else if (loginType == LOGIN_TYPE_ACCOUNT) {
             textUserName.setText(USERNAME_ACCOUNT);
             editUserName.setHint(USERNAME_HINT_ACCOUNT);
             layoutPhone.setVisibility(View.GONE);
@@ -110,7 +180,6 @@ public class FragLogin extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         LogUtil.d(tag, "onViewCreated() -- start...");
-
         super.onViewCreated(view, savedInstanceState);
 
         btnLogin.setOnClickListener(this);
@@ -124,11 +193,12 @@ public class FragLogin extends Fragment implements View.OnClickListener {
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.fragLogin_btn_login:
-                ToastUtil.showToast(context, "使用微博进行登录");
+                ToastUtil.showToast(context, "正在登录中...");
+                doWorkForLogin();
                 break;
 
             case R.id.fragLogin_layout_otherLogin:
-                doWorkForLogin();
+                ToastUtil.showToast(context, "使用微博进行登录");
                 break;
 
             case R.id.showAgreementLayout_text_service:
@@ -150,10 +220,60 @@ public class FragLogin extends Fragment implements View.OnClickListener {
      * 进行登录
      */
     private void doWorkForLogin() {
+        String userName = editUserName.getText().toString().trim();
         if (loginType == LOGIN_TYPE_PHONE) {
+            String verificationCode = editVerificationCode.getText().toString().trim();
+            if (TextUtils.isEmpty(userName)) {
+                ToastUtil.showToast(context, "手机号码不能为空");
+            } else if (TextUtils.isEmpty(verificationCode)) {
+                ToastUtil.showToast(context, "验证码不能为空");
+            } else {
+                ToastUtil.showToast(context, "正在通过手机号码方式登录...");
+                LoginSuccThread loginSuccThread = new LoginSuccThread();
+                loginSuccThread.start();
+            }
 
         } else if (loginType == LOGIN_TYPE_ACCOUNT) {
+            String pwd = editPwd.getText().toString().trim();
+            if (TextUtils.isEmpty(userName)) {
+                ToastUtil.showToast(context, "账号不能为空");
+            } else if (TextUtils.isEmpty(pwd)) {
+                ToastUtil.showToast(context, "密码不能为空");
+            } else {
+                ToastUtil.showToast(context, "正在通过账号方式登录...");
+                LoginSuccThread loginSuccThread = new LoginSuccThread();
+                loginSuccThread.start();
+            }
+        }
+    }
 
+    public void setOnLoginResult(OnLoginResult onLoginResult) {
+        this.onLoginResult = onLoginResult;
+    }
+
+    public interface OnLoginResult {
+        void loginSucc(int loginType);
+
+        void loginFail(int loginType);
+    }
+
+    /**
+     * 模拟登录的线程
+     */
+    class LoginSuccThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+
+            try {
+                sleep(2000);
+                onLoginResult.loginFail(loginType);
+
+                sleep(3000);
+                onLoginResult.loginSucc(loginType);
+            } catch (Exception e) {
+
+            }
         }
     }
 }
