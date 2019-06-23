@@ -16,10 +16,11 @@ import com.test.musicplayer.utils.LogUtil;
  * https://www.cnblogs.com/ixuea/p/9267355.html
  * https://www.300168.com/yidong/show-2752.html
  * http://www.sohu.com/a/198518846_762571
- *
  * https://github.com/aa112901/remusic
- 
- https://blog.csdn.net/hpf247/article/details/82456856
+ * https://www.jianshu.com/p/73c711c697ce
+ * https://www.cnblogs.com/JLZT1223/p/8108783.html
+ * https://blog.csdn.net/Danna_lucky/article/details/50907644
+ * https://github.com/agxxxx/AIDLMusicPlayer
  */
 public class AppMainActivity extends AppCompatActivity implements View.OnClickListener {
 
