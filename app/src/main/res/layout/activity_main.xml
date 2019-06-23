@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AppMainActivity">
+    tools:context=".ui.actvities.AppMainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/mainAct_readMe"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/MainAct_btn_toLocalMusic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/mainAct_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <!--DrawerLayout的第一个子元素是主要内容，即抽屉没有打开时显示的布局。-->
+        <!--　　DrawerLayout的第二个子元素是抽屉中的内容，即抽屉布局。 -->
+        <include layout="@layout/activity_main_right" />
+
+        <include layout="@layout/activity_main_left_menu" />
+
+    </android.support.v4.widget.DrawerLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,11 @@
 <resources>
 
     <string name="app_name">MusicPlayer</string>
+    <string name="app_version">MusicPlayer_V0.0.1</string>
 
+    <string name="text_skip">跳过</string>
+    <string name="enter_app">进入播放器</string>
     <string name="mainAct_readMe">预留界面</string>
     <string name="mainAct_btn">进入Local Music</string>
+    <string name="title_activity_time_closure">TimeClosureActivity</string>
 </resources>

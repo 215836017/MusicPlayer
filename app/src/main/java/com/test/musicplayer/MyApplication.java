@@ -7,15 +7,18 @@ import android.os.Build;
 import com.test.musicplayer.music.MusicFileHelper;
 import com.test.musicplayer.service.MusicService;
 import com.test.musicplayer.utils.CrashHandler;
+import com.test.musicplayer.utils.LogUtil;
 
 public class MyApplication extends Application {
+
+    private final String tag = "MyApplication.java";
 
     @Override
     public void onCreate() {
         super.onCreate();
 
 //          CrashHandler.getInstance().init(getApplicationContext());
-
+        LogUtil.i(tag, "modify on 2019.05.20");
         MusicFileHelper musicFileHelper = new MusicFileHelper(this);
         musicFileHelper.getOutMusicList();
 

@@ -13,20 +13,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.actvities.menus.MusicMarketActivity"></activity>
+        <activity android:name=".ui.actvities.menus.ChildrenAreaActivity" />
+        <activity android:name=".ui.actvities.menus.SoundsActivity" />
+        <activity android:name=".ui.actvities.menus.DrivingModeActivity" />
+        <activity android:name=".ui.actvities.menus.MusicToolsActivity" />
+        <activity android:name=".ui.actvities.menus.ListenKnowMusicActivity" />
+        <activity android:name=".ui.actvities.menus.ViperSoundEffectActivity" />
+        <activity
+            android:name=".ui.actvities.menus.TimeClosureActivity"
+            android:label="@string/title_activity_time_closure"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.actvities.menus.PrivateCloudActivity" />
+        <activity android:name=".ui.actvities.menus.FlowMonthlyActivity" />
+        <activity android:name=".ui.actvities.menus.VipCentreActivity" />
+        <activity android:name=".ui.actvities.menus.SkinCentreActivity" />
+        <activity android:name=".ui.actvities.menus.NewsCentreActivity" />
+        <activity android:name=".ui.actvities.NewVersionStartActivity" />
+        <activity android:name=".ui.actvities.WelcomeActivity" />
+
         <service
             android:name=".service.MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".ui.AppMainActivity">
+        <activity android:name=".ui.actvities.AppMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.LocalMusicActivity"></activity>
+        <activity android:name=".ui.actvities.LocalMusicActivity" />
     </application>
 
 </manifest>
