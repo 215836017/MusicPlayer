@@ -13,4 +13,5 @@ public class Constant {
 
     /*** 是否正在播放中 */
     //public static boolean isPlaying;
+
 }

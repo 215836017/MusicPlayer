@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cakes.musicplayer.R;
 import com.cakes.musicplayer.music.MusicInfoBean;
+import com.cakes.musicplayer.music.MusicList;
 
 import java.util.List;
 
@@ -24,10 +25,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
     private List<MusicInfoBean> musicList;
     private OnItemEventListener itemEventListener;
 
-    public LocalMusicAdapter(Context context, List<MusicInfoBean> musicList,
-                             OnItemEventListener listener) {
+    public LocalMusicAdapter(Context context, OnItemEventListener listener) {
         this.context = context;
-        this.musicList = musicList;
+        this.musicList = MusicList.getInstance().getSdcardMusicList();
         this.itemEventListener = listener;
     }
 
@@ -45,11 +45,10 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
         holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemEventListener.play(position, bean);
+                itemEventListener.playMusic(position, bean);
             }
         });
 
-        holder.imageIcon.setImageResource(R.drawable.icon_sin);
         holder.textName.setText(bean.getDisplayName());
         holder.textAuthor.setText(bean.getArtist());
     }
@@ -73,7 +72,6 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             layoutRoot = itemView.findViewById(R.id.item_local_music_layout_root);
-            imageIcon = itemView.findViewById(R.id.item_local_music_image_icon);
             textName = itemView.findViewById(R.id.item_local_music_text_name);
             textAuthor = itemView.findViewById(R.id.item_local_music_text_author);
             imageMore = itemView.findViewById(R.id.item_local_music_btn_more);

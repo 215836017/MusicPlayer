@@ -1,23 +1,14 @@
-package com.cakes.musicplayer.mediaplayer;
+package com.cakes.musicplayer.play;
 
 import java.util.Random;
 
-public class MusicManager {
-
-    public static final int play_mode_list_order = 0;
-    public static final int play_mode_list_loop = 1;
-    public static final int play_mode_singal_loop = 2;
-    public static final int play_mode_random = 3;
+public class PlayHelper {
 
     private String[] pathSdcard = {
             "sdcard/a.mp3",
             "sdcard/b.mp3",
             "sdcard/c.mp3"
     };
-
-    public String[] getPathSdcard() {
-        return pathSdcard;
-    }
 
     public int changeMusicOrder(int currentPlayIndex, int musicCount, boolean isNext) {
 

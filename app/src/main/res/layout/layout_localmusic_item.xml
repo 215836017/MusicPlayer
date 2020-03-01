@@ -7,15 +7,6 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/item_local_music_image_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher_round" />
-
     <ImageButton
         android:id="@+id/item_local_music_btn_more"
         android:layout_width="wrap_content"
@@ -29,29 +20,27 @@
         android:id="@+id/item_local_music_text_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textSize="30dp"
         app:layout_constraintEnd_toStartOf="@+id/item_local_music_btn_more"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/item_local_music_image_icon"
-        app:layout_constraintTop_toTopOf="@+id/item_local_music_image_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="musicName" />
 
     <TextView
         android:id="@+id/item_local_music_text_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/item_local_music_image_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_local_music_btn_more"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/item_local_music_image_icon"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="music author" />
 </androidx.constraintlayout.widget.ConstraintLayout>

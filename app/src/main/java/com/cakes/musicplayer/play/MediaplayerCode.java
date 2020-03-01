@@ -1,4 +1,4 @@
-package com.cakes.musicplayer.mediaplayer;
+package com.cakes.musicplayer.play;
 
 public class MediaplayerCode {
 

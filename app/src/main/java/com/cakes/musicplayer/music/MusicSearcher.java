@@ -11,16 +11,11 @@ import java.util.List;
  * （3）http://blog.csdn.net/chengkaizone/article/details/51858777
  */
 
-public class MusicFileHelper {
-
-    private final String tag = "MusicFileHelper.java";
-
-    private List<MusicInfoBean> sdcardMusicList = new ArrayList<>();
-    private List<MusicInfoBean> innerMusicList = new ArrayList<>();
+public class MusicSearcher {
 
     private QueryLocalMusicThread thread;
 
-    public MusicFileHelper(Context context, QueryLocalMusicListener queryLocalMusicListener) {
+    public MusicSearcher(Context context, QueryLocalMusicListener queryLocalMusicListener) {
         thread = new QueryLocalMusicThread(context.getApplicationContext());
         thread.setQueryListener(queryLocalMusicListener);
     }

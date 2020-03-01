@@ -7,9 +7,6 @@ import android.provider.MediaStore;
 
 import com.cakes.musicplayer.utils.LogUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class QueryLocalMusicThread extends Thread {
 
     private final String TAG = "QueryLocalMusicThread";
@@ -57,7 +54,6 @@ public class QueryLocalMusicThread extends Thread {
      */
     private void queryLocalMusics() {
         LogUtil.i(TAG, "queryLocalMusics() start: " + System.currentTimeMillis());
-        List<MusicInfoBean> musicList = new ArrayList<>();
         Uri musicUri;
         if (isSdcardMusic) {
             musicUri = uriExternal;
@@ -109,21 +105,16 @@ public class QueryLocalMusicThread extends Thread {
                 musicInfoBean.setDisplayName(displayName);
                 musicInfoBean.setPath(musicPath);
 //                LogUtil.d(TAG, "queryLocalMusics() -- musicInfoBean = " + musicInfoBean.toString());
-                musicList.add(musicInfoBean);
+//                musicList.add(musicInfoBean);
+                MusicList.getInstance().addMusicBean(musicInfoBean, isSdcardMusic);
             }
             //一定要记得
             cursor.moveToNext();
         }
-
-        if (isSdcardMusic) {
-            LogUtil.d(TAG, "EXTERNAL, find " + musicList.size() + " music files");
-        } else {
-            LogUtil.d(TAG, "INTERNAL, find " + musicList.size() + " music files");
-        }
         LogUtil.i(TAG, "getMusicList() end: " + System.currentTimeMillis());
 
         if (null != queryListener) {
-            queryListener.onQueryMusicFinish(musicList);
+            queryListener.onQueryMusicFinish();
         }
 
     }

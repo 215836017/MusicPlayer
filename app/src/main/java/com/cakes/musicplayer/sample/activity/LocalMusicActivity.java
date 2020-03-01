@@ -1,7 +1,11 @@
 package com.cakes.musicplayer.sample.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,12 +20,14 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cakes.musicplayer.R;
-import com.cakes.musicplayer.music.MusicFileHelper;
+import com.cakes.musicplayer.music.MusicList;
+import com.cakes.musicplayer.music.MusicSearcher;
 import com.cakes.musicplayer.music.MusicInfoBean;
 import com.cakes.musicplayer.music.QueryLocalMusicListener;
-import com.cakes.musicplayer.music.QueryLocalMusicThread;
+import com.cakes.musicplayer.play.OnMusicPlayListener;
 import com.cakes.musicplayer.sample.adapters.LocalMusicAdapter;
 import com.cakes.musicplayer.sample.adapters.OnItemEventListener;
+import com.cakes.musicplayer.service.MusicService;
 import com.cakes.musicplayer.utils.LogUtil;
 
 import java.util.List;
@@ -38,19 +44,14 @@ public class LocalMusicActivity extends AppCompatActivity {
     private List<MusicInfoBean> musicDataList;
     private LocalMusicAdapter localMusicAdapter;
 
+    private MusicService.MusicPlayBinder musicPlayBinder;
+
     private final int MSG_QUERY_FINISH = 0x10;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_QUERY_FINISH:
-                    LogUtil.d(TAG, "case MSG_QUERY_FINISH -- 11111111");
-                    bindMusciService();
-                    adaptData();
-                    hideLoadingView();
-                    break;
-            }
+            handleMsg(msg);
         }
     };
 
@@ -71,6 +72,22 @@ public class LocalMusicActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        musicPlayBinder.getService().removeMusicPlayListener(musicPlayerListener);
+        try {
+            unbindService(serviceConnection);
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleMsg(Message msg) {
+        switch (msg.what) {
+            case MSG_QUERY_FINISH:
+                LogUtil.d(TAG, "case MSG_QUERY_FINISH -- 11111111");
+                bindMusciService();
+                adaptData();
+                hideLoadingView();
+                break;
+        }
     }
 
     private void initView() {
@@ -89,22 +106,23 @@ public class LocalMusicActivity extends AppCompatActivity {
     private void queryData() {
         LogUtil.i(TAG, "queryData() -- 1111111");
         layoutLoading.setVisibility(View.VISIBLE);
-        MusicFileHelper musicFileHelper = new MusicFileHelper(this, queryLocalMusicListener);
+        MusicSearcher musicFileHelper = new MusicSearcher(this, queryLocalMusicListener);
         musicFileHelper.querySdcardMusicFiles();
+    }
+
+    private void bindMusciService() {
+        Intent serviceIntent = new Intent(this, MusicService.class);
+        bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE);
     }
 
     private void hideLoadingView() {
         layoutLoading.setVisibility(View.GONE);
     }
 
-    private void bindMusciService() {
-
-    }
-
     private void adaptData() {
-        if (null != musicDataList && !musicDataList.isEmpty()) {
+        if (!MusicList.getInstance().getSdcardMusicList().isEmpty()) {
             LogUtil.i(TAG, "adaptData() --- musicDataList.size = " + musicDataList.size());
-            localMusicAdapter = new LocalMusicAdapter(this, musicDataList, onItemEventListener);
+            localMusicAdapter = new LocalMusicAdapter(this, onItemEventListener);
             recyclerView.setAdapter(localMusicAdapter);
         } else {
             textEmpty.setVisibility(View.VISIBLE);
@@ -113,16 +131,17 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private QueryLocalMusicListener queryLocalMusicListener = new QueryLocalMusicListener() {
         @Override
-        public void onQueryMusicFinish(List<MusicInfoBean> musicList) {
-            musicDataList = musicList;
+        public void onQueryMusicFinish() {
+            musicDataList = MusicList.getInstance().getSdcardMusicList();
             handler.sendEmptyMessage(MSG_QUERY_FINISH);
         }
     };
+
     private OnItemEventListener onItemEventListener = new OnItemEventListener() {
 
         @Override
-        public void play(int position, MusicInfoBean musicInfoBean) {
-
+        public void playMusic(int position, MusicInfoBean musicInfoBean) {
+            musicPlayBinder.playMusic(musicInfoBean);
         }
 
         @Override
@@ -131,4 +150,38 @@ public class LocalMusicActivity extends AppCompatActivity {
         }
     };
 
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            musicPlayBinder = (MusicService.MusicPlayBinder) service;
+            musicPlayBinder.getService().addMusicPlayListener(musicPlayerListener);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicPlayBinder = null;
+        }
+    };
+
+    private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
+        @Override
+        public void onStart() {
+
+        }
+
+        @Override
+        public void onStop() {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+
+        @Override
+        public void onError(int errorCode) {
+
+        }
+    };
 }

@@ -17,7 +17,7 @@ public class MusicFileHelperTest {
         String str1 = (MediaStore.Audio.Albums.getContentUri("aaa")).toString();
         String str2 = (MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI).toString();
         String str3 = (MediaStore.Audio.Albums.INTERNAL_CONTENT_URI).toString();
-        System.out.println("\nMediaStore.Audio.Albums 部分:"
+               System.out.println("\nMediaStore.Audio.Albums 部分:"
                 + "\nMediaStore.Audio.Albums.getContentUri() ---- " + str1
                 + "\nMediaStore.Audio.Albums.EXTERNAL_CONTENT_URI ---- " + str2
                 + "\nMediaStore.Audio.Albums.INTERNAL_CONTENT_URI ---- " + str3);

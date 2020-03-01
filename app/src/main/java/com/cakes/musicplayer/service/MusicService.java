@@ -1,18 +1,18 @@
 package com.cakes.musicplayer.service;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Binder;
-import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 
-import com.cakes.musicplayer.music.Constant;
-import com.cakes.musicplayer.utils.LogUtil;
+import com.cakes.musicplayer.music.MusicInfoBean;
+import com.cakes.musicplayer.play.MediaPlayerManager;
+import com.cakes.musicplayer.play.OnMusicPlayListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO
 //	https://www.jianshu.com/p/46c63dfd5c89/
@@ -26,55 +26,26 @@ import com.cakes.musicplayer.utils.LogUtil;
 //  多个Activity bindService的使用: https://blog.csdn.net/wangsf789/article/details/85694193
 public class MusicService extends Service {
 
-    private final String tag = "MusicService";
+    private final String TAG = "MusicService";
 
     private final String CHANNEL_NOTIFICATION_ID = "musicService_Notification_id";
 
-    private MediaPlayer mediaPlayer;
-
     private MusicPlayBinder musicPlayBinder = new MusicPlayBinder();
-    private OnMusicServiceListener musicServiceListener;
+    private List<OnMusicPlayListener> playerListenerList = new ArrayList<>();
+    private MediaPlayerManager mediaPlayerManager;
 
-    private MusicService musicService;
-
-    public class MusicPlayBinder extends Binder {
-        public MusicService getService() {
-            return MusicService.this;
+    private final int MSG_PLAY_COMPLETE = 0x10;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            handleMsg(msg);
         }
-
-        public void startPlayMusic(String musicFilePath) {
-            musicService.play(musicFilePath);
-        }
-
-        public void stopPlayMusic() {
-            musicService.stop();
-        }
-
-        public int getPlayProgress() {
-            return 0;
-        }
-    }
-
-    public interface OnMusicServiceListener {
-        void onPlayStart();
-
-        void onPlayFinsh();
-
-        void onPlayStoped();
-
-        void onPlayError();
-    }
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        //   initMediaPlayer();
-
-        return super.onStartCommand(intent, flags, startId);
+        return musicPlayBinder;
     }
 
     @Override
@@ -87,137 +58,106 @@ public class MusicService extends Service {
         //android O 以后每个Notification都需要依附一个channel，要不然就报错。那就加一个简单的channel
         // error_1. https://blog.csdn.net/kdsde/article/details/82143866
         //          https://blog.csdn.net/o279642707/article/details/82352431
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, "诺秒贷", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(mChannel);
-            Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_NOTIFICATION_ID).build();
-            startForeground(1, notification);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            NotificationChannel mChannel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, "诺秒贷", NotificationManager.IMPORTANCE_HIGH);
+//            notificationManager.createNotificationChannel(mChannel);
+//            Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_NOTIFICATION_ID).build();
+//            startForeground(1, notification);
+//        }
 
-        initMediaPlayer();
-
-        //  playOrPause();
+        initManagers();
     }
 
-    private void play(String path) {
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mediaPlayerManager.release();
+        mediaPlayerManager = null;
     }
 
-    /**
-     * 开始/暂停播放
-     */
-    private void playOrPause() {
-
-        Constant.isPlaying = mediaPlayer.isPlaying();
-
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            Constant.currentPosition = mediaPlayer.getCurrentPosition();
-
-        } else {
-            startPlay();
-        }
+    private void initManagers() {
+        mediaPlayerManager = new MediaPlayerManager(musicPlayerListener);
     }
 
-    /**
-     * 开始/暂停播放
-     */
-    private void stop() {
-
-        Constant.isPlaying = mediaPlayer.isPlaying();
-
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            Constant.currentPosition = mediaPlayer.getCurrentPosition();
-        }
-
-        mediaPlayer.stop();
-    }
-
-    /**
-     * 开始播放
-     */
-    private void startPlay() {
-        try {
-            mediaPlayer.reset();
-            mediaPlayer.setDataSource(Constant.currentPlayingPath);
-//            mediaPlayer.seekTo(Constant.currentPosition);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-
-            updatePlayProgress();
-        } catch (Exception e) {
+    private void handleMsg(Message msg) {
+        switch (msg.what) {
+            case MSG_PLAY_COMPLETE:
+                doWorkForPlayComplete();
+                break;
 
         }
     }
 
-    /**
-     * 每隔一秒更新播放的进度条
-     */
-    private void updatePlayProgress() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                while (mediaPlayer.isPlaying()) {
-                    try {
+    private void doWorkForPlayComplete() {
 
-                        Constant.currentPosition = mediaPlayer.getCurrentPosition();
-                        LogUtil.d(tag, "updatePlayProgress() -- Constant.currentPosition = " +
-                                Constant.currentPosition);
-                        Thread.sleep(1000);
+    }
 
-                    } catch (Exception e) {
-                    }
-                }
+    public void addMusicPlayListener(OnMusicPlayListener onMusicPlayListener) {
+        if (null != onMusicPlayListener && !playerListenerList.contains(onMusicPlayListener)) {
+            playerListenerList.add(onMusicPlayListener);
+        }
+    }
+
+    public void removeMusicPlayListener(OnMusicPlayListener onMusicPlayListener) {
+        if (null != onMusicPlayListener && playerListenerList.contains(onMusicPlayListener)) {
+            playerListenerList.remove(onMusicPlayListener);
+        }
+    }
+
+    public class MusicPlayBinder extends Binder {
+        public MusicService getService() {
+            return MusicService.this;
+        }
+
+        public void playMusic(MusicInfoBean musicInfoBean) {
+            mediaPlayerManager.play(musicInfoBean);
+        }
+
+        public void pause() {
+            mediaPlayerManager.pause();
+        }
+
+        public void resume() {
+            mediaPlayerManager.resume();
+        }
+
+        public void stop() {
+            mediaPlayerManager.stop();
+        }
+
+        public int getCurrentPosition() {
+            return mediaPlayerManager.getCurrentPosition();
+        }
+    }
+
+    private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
+        @Override
+        public void onStart() {
+            for (OnMusicPlayListener listener : playerListenerList) {
+                listener.onStart();
             }
-        }.start();
-    }
-
-    /**
-     * mediaPlayer的各种状态监听器
-     */
-    private void initMediaPlayer() {
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setOnErrorListener(onErrorListener);
-        mediaPlayer.setOnPreparedListener(onPreparedListener);
-        mediaPlayer.setOnSeekCompleteListener(onSeekCompleteListener);
-        mediaPlayer.setOnCompletionListener(onCompletionListener);
-
-    }
-
-    MediaPlayer.OnErrorListener onErrorListener = new MediaPlayer.OnErrorListener() {
-
-        @Override
-        public boolean onError(MediaPlayer mp, int what, int extra) {
-            LogUtil.e(tag, "onErrorListener -- what = " + what + ", extra = " + extra);
-            return false;
         }
-    };
 
-    MediaPlayer.OnPreparedListener onPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
-        public void onPrepared(MediaPlayer mp) {
-//            if (!isGetDuration) {
-//                musicDuration = mp.getDuration();
-//                isGetDuration = true;
-//            }
-//            handler.sendEmptyMessage(MediaplayerCode.EventCode.MSG_EVENT_PERPARE_OK);
+        public void onStop() {
+            for (OnMusicPlayListener listener : playerListenerList) {
+                listener.onStop();
+            }
         }
-    };
 
-    MediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new MediaPlayer.OnSeekCompleteListener() {
         @Override
-        public void onSeekComplete(MediaPlayer mp) {
-
+        public void onComplete() {
+            for (OnMusicPlayListener listener : playerListenerList) {
+                listener.onComplete();
+            }
         }
-    };
 
-    MediaPlayer.OnCompletionListener onCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
-        public void onCompletion(MediaPlayer mp) {
-//            handler.sendEmptyMessage(MediaplayerCode.EventCode.MSG_EVENT_PLAY_FINISH);
+        public void onError(int errorCode) {
+            for (OnMusicPlayListener listener : playerListenerList) {
+                listener.onError(errorCode);
+            }
         }
     };
 }
