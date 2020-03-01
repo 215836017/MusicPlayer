@@ -153,21 +153,22 @@ public class MusicInfoBean {
         isPlaying = playing;
     }
 
-    public MusicInfoBean(long songId, String title, String album, long albumId, String displayName,
-                         String musicNameNoTail, String artist, long duration, long size,
-                         String path, String lrcTitle, String lrcSize, boolean isPlaying) {
-        this.songId = songId;
-        this.title = title;
-        this.album = album;
-        this.albumId = albumId;
-        this.displayName = displayName;
-        this.musicNameNoTail = musicNameNoTail;
-        this.artist = artist;
-        this.duration = duration;
-        this.size = size;
-        this.path = path;
-        this.lrcTitle = lrcTitle;
-        this.lrcSize = lrcSize;
-        this.isPlaying = isPlaying;
+    @Override
+    public String toString() {
+        return "MusicInfoBean{" +
+                "songId=" + songId +
+                ", title='" + title + '\'' +
+                ", album='" + album + '\'' +
+                ", albumId=" + albumId +
+                ", displayName='" + displayName + '\'' +
+                ", musicNameNoTail='" + musicNameNoTail + '\'' +
+                ", artist='" + artist + '\'' +
+                ", duration=" + duration +
+                ", size=" + size +
+                ", path='" + path + '\'' +
+                ", lrcTitle='" + lrcTitle + '\'' +
+                ", lrcSize='" + lrcSize + '\'' +
+                ", isPlaying=" + isPlaying +
+                '}';
     }
 }

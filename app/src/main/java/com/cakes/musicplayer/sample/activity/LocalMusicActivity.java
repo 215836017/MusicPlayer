@@ -22,6 +22,7 @@ import com.cakes.musicplayer.music.QueryLocalMusicListener;
 import com.cakes.musicplayer.music.QueryLocalMusicThread;
 import com.cakes.musicplayer.sample.adapters.LocalMusicAdapter;
 import com.cakes.musicplayer.sample.adapters.OnItemEventListener;
+import com.cakes.musicplayer.utils.LogUtil;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class LocalMusicActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case MSG_QUERY_FINISH:
+                    LogUtil.d(TAG, "case MSG_QUERY_FINISH -- 11111111");
                     bindMusciService();
                     adaptData();
                     hideLoadingView();
@@ -69,7 +71,6 @@ public class LocalMusicActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
     private void initView() {
@@ -86,6 +87,7 @@ public class LocalMusicActivity extends AppCompatActivity {
     }
 
     private void queryData() {
+        LogUtil.i(TAG, "queryData() -- 1111111");
         layoutLoading.setVisibility(View.VISIBLE);
         MusicFileHelper musicFileHelper = new MusicFileHelper(this, queryLocalMusicListener);
         musicFileHelper.querySdcardMusicFiles();
@@ -101,6 +103,7 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private void adaptData() {
         if (null != musicDataList && !musicDataList.isEmpty()) {
+            LogUtil.i(TAG, "adaptData() --- musicDataList.size = " + musicDataList.size());
             localMusicAdapter = new LocalMusicAdapter(this, musicDataList, onItemEventListener);
             recyclerView.setAdapter(localMusicAdapter);
         } else {
@@ -111,6 +114,7 @@ public class LocalMusicActivity extends AppCompatActivity {
     private QueryLocalMusicListener queryLocalMusicListener = new QueryLocalMusicListener() {
         @Override
         public void onQueryMusicFinish(List<MusicInfoBean> musicList) {
+            musicDataList = musicList;
             handler.sendEmptyMessage(MSG_QUERY_FINISH);
         }
     };

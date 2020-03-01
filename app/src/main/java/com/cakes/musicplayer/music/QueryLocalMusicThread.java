@@ -56,7 +56,7 @@ public class QueryLocalMusicThread extends Thread {
      * 获取存储的全部音乐文件
      */
     private void queryLocalMusics() {
-        LogUtil.i(TAG, "getMusicList() start: " + System.currentTimeMillis());
+        LogUtil.i(TAG, "queryLocalMusics() start: " + System.currentTimeMillis());
         List<MusicInfoBean> musicList = new ArrayList<>();
         Uri musicUri;
         if (isSdcardMusic) {
@@ -108,7 +108,7 @@ public class QueryLocalMusicThread extends Thread {
                 musicInfoBean.setAlbum(album);
                 musicInfoBean.setDisplayName(displayName);
                 musicInfoBean.setPath(musicPath);
-
+//                LogUtil.d(TAG, "queryLocalMusics() -- musicInfoBean = " + musicInfoBean.toString());
                 musicList.add(musicInfoBean);
             }
             //一定要记得

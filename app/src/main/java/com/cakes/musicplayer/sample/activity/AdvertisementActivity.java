@@ -31,7 +31,8 @@ public class AdvertisementActivity extends AppCompatActivity {
             R.drawable.my_image_third,
             R.drawable.my_image_fourth,
             R.drawable.my_image_fifth,
-            R.drawable.my_image_sixth
+            R.drawable.my_image_sixth,
+            R.drawable.skin_player_bg
     };
 
     private final int MSG_UPDATE_TIME = 0x10;
@@ -48,8 +49,6 @@ public class AdvertisementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_advertisement);
 
         initDatas();
@@ -59,7 +58,15 @@ public class AdvertisementActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.sendEmptyMessage(MSG_UPDATE_TIME);
+        handler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, DELAY_TIME_TO_UPDATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != handler) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     private void initDatas() {
@@ -72,7 +79,7 @@ public class AdvertisementActivity extends AppCompatActivity {
 
         // 模仿动态加载广告背景页
         Random random = new Random();
-        layoutRoot.setBackgroundResource(random.nextInt(rootBackgrounds.length));
+        layoutRoot.setBackgroundResource(rootBackgrounds[random.nextInt(rootBackgrounds.length)]);
 
         textSkip.setText(getStringForTime());
         textSkip.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +91,8 @@ public class AdvertisementActivity extends AppCompatActivity {
     }
 
     private void updateTime() {
-        if (timeCount < 0) {
-            startActivity(new Intent(this, LocalMusicActivity.class));
+        if (timeCount <= 0) {
+            skipActivity();
 
         } else {
             handler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, DELAY_TIME_TO_UPDATE);
@@ -101,5 +108,6 @@ public class AdvertisementActivity extends AppCompatActivity {
     private void skipActivity() {
         handler.removeMessages(MSG_UPDATE_TIME);
         startActivity(new Intent(this, LocalMusicActivity.class));
+        finish();
     }
 }

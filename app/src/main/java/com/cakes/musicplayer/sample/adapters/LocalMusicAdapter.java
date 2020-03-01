@@ -41,12 +41,17 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final MusicInfoBean bean = musicList.get(position);
+
         holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemEventListener.play(position, bean);
             }
         });
+
+        holder.imageIcon.setImageResource(R.drawable.icon_sin);
+        holder.textName.setText(bean.getDisplayName());
+        holder.textAuthor.setText(bean.getArtist());
     }
 
     @Override
