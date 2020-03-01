@@ -1,50 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.test.musicplayer">
+    package="com.cakes.musicplayer">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".MusicApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.actvities.LoginActivity"></activity>
-        <activity android:name=".ui.actvities.AgreementActivity" />
-        <activity android:name=".ui.actvities.menus.SettingActivity" />
-        <activity android:name=".ui.actvities.ChoseLoginModeActivity" />
-        <activity android:name=".ui.actvities.menus.MusicMarketActivity" />
-        <activity android:name=".ui.actvities.menus.ChildrenAreaActivity" />
-        <activity android:name=".ui.actvities.menus.SoundsActivity" />
-        <activity android:name=".ui.actvities.menus.DrivingModeActivity" />
-        <activity android:name=".ui.actvities.menus.MusicToolsActivity" />
-        <activity android:name=".ui.actvities.menus.ListenKnowMusicActivity" />
-        <activity android:name=".ui.actvities.menus.ViperSoundEffectActivity" />
-        <activity android:name=".ui.actvities.menus.PrivateCloudActivity" />
-        <activity android:name=".ui.actvities.menus.FlowMonthlyActivity" />
-        <activity android:name=".ui.actvities.menus.VipCentreActivity" />
-        <activity android:name=".ui.actvities.menus.SkinCentreActivity" />
-        <activity android:name=".ui.actvities.menus.NewsCentreActivity" />
-        <activity android:name=".ui.actvities.NewVersionStartActivity" />
-        <activity android:name=".ui.actvities.LocalMusicActivity" />
-
+        android:theme="@style/AppThemeNoActionBar">
         <service
             android:name=".service.MusicService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.actvities.WelcomeActivity">
+        <activity
+            android:name="com.cakes.musicplayer.sample.activity.AdvertisementActivity"
+            android:theme="@style/ThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.actvities.AppMainActivity" />
+        <activity android:name=".sample.activity.LocalMusicActivity" />
     </application>
 
 </manifest>
