@@ -7,50 +7,69 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 
 import com.cakes.musicplayer.music.Constant;
 import com.cakes.musicplayer.utils.LogUtil;
 
+// TODO
+//	https://www.jianshu.com/p/46c63dfd5c89/
+//	https://www.jianshu.com/p/c566903e44d0
+//	https://blog.csdn.net/u012604299/article/details/78326371
+// https://www.cnblogs.com/Jason-Jan/p/8459687.html#_label3
+//	需要考虑使用观察者模式进行组件间的通信。
+// 参考： https://blog.csdn.net/AndroidFlying007/article/details/52761393
+//        https://blog.csdn.net/Gods_magic/article/details/84558169
+
+//  多个Activity bindService的使用: https://blog.csdn.net/wangsf789/article/details/85694193
 public class MusicService extends Service {
 
-    private final String tag = "MusicService.java";
+    private final String tag = "MusicService";
 
     private final String CHANNEL_NOTIFICATION_ID = "musicService_Notification_id";
 
     private MediaPlayer mediaPlayer;
 
-    public static Handler serviceHandler;
-    public static final int msg_play = 101;
-    public static final int msg_stop = 102;
+    private MusicPlayBinder musicPlayBinder = new MusicPlayBinder();
+    private OnMusicServiceListener musicServiceListener;
+
+    private MusicService musicService;
+
+    public class MusicPlayBinder extends Binder {
+        public MusicService getService() {
+            return MusicService.this;
+        }
+
+        public void startPlayMusic(String musicFilePath) {
+            musicService.play(musicFilePath);
+        }
+
+        public void stopPlayMusic() {
+            musicService.stop();
+        }
+
+        public int getPlayProgress() {
+            return 0;
+        }
+    }
+
+    public interface OnMusicServiceListener {
+        void onPlayStart();
+
+        void onPlayFinsh();
+
+        void onPlayStoped();
+
+        void onPlayError();
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    /**
-     * onstart()方法是在android2.0一下的版本中使用
-     *
-     * @param intent
-     * @param startId
-     */
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-    }
-
-    /**
-     * 在android2.0以上则使用onstartCommand()方法。它们两个方法放在一起使用时，不会产生冲突。
-     *
-     * @param intent
-     * @param flags
-     * @param startId
-     * @return
-     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //   initMediaPlayer();
@@ -58,11 +77,6 @@ public class MusicService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    // TODO
-//	https://www.jianshu.com/p/46c63dfd5c89/
-//	https://www.jianshu.com/p/c566903e44d0
-//	https://blog.csdn.net/u012604299/article/details/78326371
-// https://www.cnblogs.com/Jason-Jan/p/8459687.html#_label3
     @Override
     public void onCreate() {
         super.onCreate();
@@ -81,33 +95,13 @@ public class MusicService extends Service {
             startForeground(1, notification);
         }
 
-
-        serviceHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                handleMsg(msg);
-				
-			//	需要考虑使用观察者模式进行组件间的通信。
-                // 参考： https://blog.csdn.net/AndroidFlying007/article/details/52761393
-                //        https://blog.csdn.net/Gods_magic/article/details/84558169
-            }
-        };
-
         initMediaPlayer();
 
         //  playOrPause();
     }
 
-    private void handleMsg(Message msg) {
-        switch (msg.what) {
-            case msg_play:
-                startPlay();
-                break;
+    private void play(String path) {
 
-            case msg_stop:
-                stop();
-        }
     }
 
     /**

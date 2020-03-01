@@ -10,9 +10,9 @@ import com.cakes.musicplayer.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-class QueryLocalMusicThread extends Thread {
+public class QueryLocalMusicThread extends Thread {
 
-    private final String TAG = "GetMusicsThread";
+    private final String TAG = "QueryLocalMusicThread";
 
     /*** 查询的排序方式 */
     private String sortOrder = MediaStore.Audio.Albums.DEFAULT_SORT_ORDER;  //即默认以album_key排序
@@ -25,7 +25,7 @@ class QueryLocalMusicThread extends Thread {
     private Context context;
     private boolean isSdcardMusic;
 
-    private GetMusicProcessListener listener;
+    private QueryLocalMusicListener queryListener;
 
     public QueryLocalMusicThread(Context context) {
         this.context = context;
@@ -36,11 +36,11 @@ class QueryLocalMusicThread extends Thread {
     public void run() {
         super.run();
 
-        getMusicList();
+        queryLocalMusics();
     }
 
-    public void setGetMusicProcessListener(GetMusicProcessListener listener) {
-        this.listener = listener;
+    public void setQueryListener(QueryLocalMusicListener listener) {
+        this.queryListener = listener;
     }
 
     /**
@@ -55,7 +55,7 @@ class QueryLocalMusicThread extends Thread {
     /**
      * 获取存储的全部音乐文件
      */
-    private void getMusicList() {
+    private void queryLocalMusics() {
         LogUtil.i(TAG, "getMusicList() start: " + System.currentTimeMillis());
         List<MusicInfoBean> musicList = new ArrayList<>();
         Uri musicUri;
@@ -67,14 +67,12 @@ class QueryLocalMusicThread extends Thread {
 
         Cursor cursor = context.getContentResolver().query(musicUri, null, null,
                 null, sortOrder);
-
         if (cursor.getCount() <= 0) {
             return;
         }
 
         //刚开始这句很重要
         cursor.moveToFirst();
-
         for (int i = 0; i < cursor.getCount(); i++) {
 
             MusicInfoBean musicInfoBean = new MusicInfoBean();
@@ -89,7 +87,6 @@ class QueryLocalMusicThread extends Thread {
                     .getColumnIndex(MediaStore.Audio.Media.DURATION)); // 时长
             long musicSize = cursor.getLong(cursor
                     .getColumnIndex(MediaStore.Audio.Media.SIZE)); // 音乐文件大小
-
             String title = cursor.getString(cursor
                     .getColumnIndex(MediaStore.Audio.Media.TITLE));// 音乐标题
             String artist = cursor.getString(cursor
@@ -114,21 +111,20 @@ class QueryLocalMusicThread extends Thread {
 
                 musicList.add(musicInfoBean);
             }
-
             //一定要记得
             cursor.moveToNext();
         }
 
         if (isSdcardMusic) {
             LogUtil.d(TAG, "EXTERNAL, find " + musicList.size() + " music files");
-            MusicFileHelper.sdcardMusicList = musicList;
         } else {
             LogUtil.d(TAG, "INTERNAL, find " + musicList.size() + " music files");
-            MusicFileHelper.innerMusicList = musicList;
         }
         LogUtil.i(TAG, "getMusicList() end: " + System.currentTimeMillis());
 
-        listener.onGetMusicFinish();
-    }
+        if (null != queryListener) {
+            queryListener.onQueryMusicFinish(musicList);
+        }
 
+    }
 }

@@ -15,6 +15,8 @@ public class MusicInfoBean {
     private String lrcTitle;//歌词名称
     private String lrcSize;//歌词大小
 
+    private boolean isPlaying;
+
     public MusicInfoBean() {
         super();
     }
@@ -143,22 +145,29 @@ public class MusicInfoBean {
         this.lrcSize = lrcSize;
     }
 
-    @Override
-    public String toString() {
-        return "MusicInfoBean{" +
-                "songId=" + songId +
-                ", title='" + title + '\'' +
-                ", album='" + album + '\'' +
-                ", albumId=" + albumId +
-                ", displayName='" + displayName + '\'' +
-                ", musicNameNoTitle='" + musicNameNoTail + '\'' +
-                ", artist='" + artist + '\'' +
-                ", duration=" + duration +
-                ", size=" + size +
-                ", path='" + path + '\'' +
-                ", lrcTitle='" + lrcTitle + '\'' +
-                ", lrcSize='" + lrcSize + '\'' +
-                '}';
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+
+    public MusicInfoBean(long songId, String title, String album, long albumId, String displayName,
+                         String musicNameNoTail, String artist, long duration, long size,
+                         String path, String lrcTitle, String lrcSize, boolean isPlaying) {
+        this.songId = songId;
+        this.title = title;
+        this.album = album;
+        this.albumId = albumId;
+        this.displayName = displayName;
+        this.musicNameNoTail = musicNameNoTail;
+        this.artist = artist;
+        this.duration = duration;
+        this.size = size;
+        this.path = path;
+        this.lrcTitle = lrcTitle;
+        this.lrcSize = lrcSize;
+        this.isPlaying = isPlaying;
+    }
 }
