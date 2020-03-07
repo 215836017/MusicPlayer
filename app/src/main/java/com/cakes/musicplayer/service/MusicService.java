@@ -114,6 +114,10 @@ public class MusicService extends Service {
             mediaPlayerManager.play(musicInfoBean);
         }
 
+        public void palyFromLastSavedInfo() {
+
+        }
+
         public void pause() {
             mediaPlayerManager.pause();
         }

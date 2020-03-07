@@ -7,95 +7,106 @@ import java.util.Map;
 
 public class SPUtil {
 
-    /*** 保存在手机里的SP文件名 */
-    private static final String FILE_NAME = "MusicPlayer_sp";
+    /*** name of SharedPreferences */
+    private static final String FILE_NAME = "musicPlayerSP";
+
+    private static SPUtil INSTANCE;
 
     private static SharedPreferences sp;
     private static SharedPreferences.Editor editor;
 
-    private static void initSP(Context context) {
+    private SPUtil() {
+    }
+
+    public static SPUtil getInstance() {
+        if (null == INSTANCE) {
+            synchronized (SPUtil.class) {
+                if (null == INSTANCE) {
+                    INSTANCE = new SPUtil();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public void initSP(Context context) {
         if (null == sp) {
-            sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+            sp = context.getApplicationContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         }
         if (null == editor) {
             editor = sp.edit();
         }
     }
 
-    /**
-     * 往SharedPreferences中保存数据
-     */
-    public static void put(Context context, String key, Object obj) {
+/*
+SharedPreference中editor.apply()和editor.commit()的区别:
+相同点：
+1.二者都可提交preference的修改数据
+2.二者都是原子操作
 
-        initSP(context);
+区别：
+1.apply没有返回值而commit返回boolean表明修改是否提交成功
+2.apply是将修改数据原子提交到内存，而后异步真正提交到硬件磁盘；而commit是同步的提交到硬件磁盘，因此，在多个
+并发的提交commit的时候，他们会等待正在处理的commit保存到磁盘后在操作，从而降低了效率。而apply只是原子的提交
+到内容，后面有调用apply的函数的将会直接覆盖前面的内存数据，这样从一定程度上提高了很多效率。
+3.apply方法不会提示任何失败的提示。
 
-        if (obj instanceof Boolean) {
-            editor.putBoolean(key, (Boolean) obj);
-        } else if (obj instanceof Float) {
-            editor.putFloat(key, (Float) obj);
-        } else if (obj instanceof Integer) {
-            editor.putInt(key, (Integer) obj);
-        } else if (obj instanceof Long) {
-            editor.putLong(key, (Long) obj);
-        } else {
-            editor.putString(key, (String) obj);
-        }
-        editor.commit();
-    }
-
+总结:
+由于在一个进程中，sharedPreference是单实例，一般不会出现并发冲突，如果对提交的结果不关心的话，建议使用apply，
+当然需要确保提交成功且有后续操作的话，还是需要用commit的。
+ */
 
     /**
-     * 从SharedPreferences中获取指定数据
+     * save int value to SharedPreferences
      */
-    public static Object get(Context context, String key, Object defaultObj) {
-        initSP(context);
-        if (defaultObj instanceof Boolean) {
-            return sp.getBoolean(key, (Boolean) defaultObj);
-        } else if (defaultObj instanceof Float) {
-            return sp.getFloat(key, (Float) defaultObj);
-        } else if (defaultObj instanceof Integer) {
-            return sp.getInt(key, (Integer) defaultObj);
-        } else if (defaultObj instanceof Long) {
-            return sp.getLong(key, (Long) defaultObj);
-        } else if (defaultObj instanceof String) {
-            return sp.getString(key, (String) defaultObj);
-        }
-        return null;
+    public void putInt(String key, int value) {
+        editor.putInt(key, value).commit();
     }
 
     /**
-     * 从SharedPreferences删除指定数据
+     * save String value to SharedPreferences
      */
-    public static void remove(Context context, String key) {
-        initSP(context);
+    public void putString(String key, String value) {
+        editor.putString(key, value).commit();
+    }
+
+    /**
+     * get int value from SharedPreferences
+     */
+    public int getInt(String key, int defaultValue) {
+        return sp.getInt(key, defaultValue);
+    }
+
+    /**
+     * delete the Value of Key from SharedPreferences
+     */
+    public void remove(Context context, String key) {
         editor.remove(key);
         editor.commit();
     }
 
 
     /**
-     * 从SharedPreferences中返回所有键值对
+     * return all Key-Values from SharedPreferences
      */
-    public static Map<String, ?> getAll(Context context) {
-        initSP(context);
+    public Map<String, ?> getAll(Context context) {
         Map<String, ?> map = sp.getAll();
         return map;
     }
 
     /**
-     * 从SharedPreferences中删除所有数据
+     * delete Value of Key from SharedPreferences
      */
-    public static void clear(Context context) {
+    public void clear(Context context) {
         initSP(context);
         editor.clear();
         editor.commit();
     }
 
     /**
-     * 从SharedPreferences中检查key对应的数据是否存在
+     * check the Value fo Key is exist in SharedPreferences
      */
     public static boolean contains(Context context, String key) {
-        initSP(context);
         return sp.contains(key);
     }
 }

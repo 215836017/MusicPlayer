@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/skin_player_bg"
-    tools:context="com.cakes.musicplayer.sample.activity.AdvertisementActivity">
+    tools:context="com.cakes.musicplayer.ui.activities.AdvertisementActivity">
 
     <TextView
         android:id="@+id/activity_advertisement_text_skip"
