@@ -2,6 +2,9 @@ package com.cakes.musicplayer.music;
 
 public class MusicInfoBean {
 
+    private final String UNKNOWN = "unknown";
+    private final String UNKNOWN_ZH = "未知";
+
     private long songId;   // 歌曲ID
     private String title;  //音乐标题
     private String album;  //专辑
@@ -98,6 +101,9 @@ public class MusicInfoBean {
     }
 
     public String getArtist() {
+        if (artist.contains(UNKNOWN)) {
+            return UNKNOWN_ZH;
+        }
         return artist;
     }
 

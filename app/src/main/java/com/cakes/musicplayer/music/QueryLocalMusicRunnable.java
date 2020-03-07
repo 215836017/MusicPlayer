@@ -5,11 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.cakes.musicplayer.threads.BaseRunnable;
 import com.cakes.musicplayer.utils.LogUtil;
 
-public class QueryLocalMusicThread extends Thread {
+public class QueryLocalMusicRunnable implements BaseRunnable {
 
-    private final String TAG = "QueryLocalMusicThread";
+    private final String TAG = "QueryLocalMusicRunnable";
 
     /*** 查询的排序方式 */
     private String sortOrder = MediaStore.Audio.Albums.DEFAULT_SORT_ORDER;  //即默认以album_key排序
@@ -24,29 +25,21 @@ public class QueryLocalMusicThread extends Thread {
 
     private QueryLocalMusicListener queryListener;
 
-    public QueryLocalMusicThread(Context context) {
+    public QueryLocalMusicRunnable(Context context) {
         this.context = context;
         this.isSdcardMusic = true;
     }
 
     @Override
     public void run() {
-        super.run();
-
         queryLocalMusics();
     }
 
-    public void setQueryListener(QueryLocalMusicListener listener) {
-        this.queryListener = listener;
-    }
-
-    /**
-     * 设置从内部存储查找还是从外部存储(sdcard存储)查找. 如果不调用该方法, 则构造方法中默认为true
-     *
-     * @param sdcardMusic true: 从外部存储(sdcard存储查找); false: 从内部存储查找
-     */
-    public void setSdcardMusic(boolean sdcardMusic) {
-        isSdcardMusic = sdcardMusic;
+    @Override
+    public void onRunFailed() {
+        if (null != queryListener) {
+            queryListener.onQueryMusicFailed();
+        }
     }
 
     /**
@@ -104,7 +97,7 @@ public class QueryLocalMusicThread extends Thread {
                 musicInfoBean.setAlbum(album);
                 musicInfoBean.setDisplayName(displayName);
                 musicInfoBean.setPath(musicPath);
-                LogUtil.d(TAG, "queryLocalMusics() -- musicInfoBean = " + musicInfoBean.toString());
+//                LogUtil.d(TAG, "queryLocalMusics() -- musicInfoBean = " + musicInfoBean.toString());
 //                musicList.add(musicInfoBean);
                 MusicList.getInstance().addMusicBean(musicInfoBean, isSdcardMusic);
             }

@@ -199,6 +199,11 @@ public class LocalMusicActivity extends AppCompatActivity {
             musicDataList = MusicList.getInstance().getSdcardMusicList();
             handler.sendEmptyMessage(MSG_QUERY_FINISH);
         }
+
+        @Override
+        public void onQueryMusicFailed() {
+
+        }
     };
 
     private OnItemEventListener onItemEventListener = new OnItemEventListener() {

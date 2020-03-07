@@ -2,9 +2,6 @@ package com.cakes.musicplayer.music;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * MediaStore的学习： （1）http://blog.csdn.net/wuqingyidongren/article/details/53640399
  * （2）https://www.oschina.net/question/16_7603
