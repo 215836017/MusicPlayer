@@ -31,6 +31,9 @@ import com.cakes.musicplayer.ui.adapters.LocalMusicAdapter;
 import com.cakes.musicplayer.ui.adapters.OnItemEventListener;
 import com.cakes.musicplayer.service.MusicService;
 import com.cakes.musicplayer.utils.LogUtil;
+import com.cakes.musicplayer.utils.sp.SPConstant;
+import com.cakes.musicplayer.utils.sp.SPUtil;
+import com.cakes.musicplayer.utils.sp.SPUtilTest;
 
 import java.util.List;
 
@@ -72,6 +75,7 @@ public class LocalMusicActivity extends AppCompatActivity {
 
         initView();
         queryData();
+        initBottomControlViews();
     }
 
     @Override
@@ -144,6 +148,10 @@ public class LocalMusicActivity extends AppCompatActivity {
         layoutLoading.setVisibility(View.VISIBLE);
         MusicSearcher musicFileHelper = new MusicSearcher(this, queryLocalMusicListener);
         musicFileHelper.querySdcardMusicFiles();
+    }
+
+    private void initBottomControlViews() {
+        String lastPlayInfo = SPUtil.getString(this, SPConstant.SP_LAST_PLAY_INFO, "");
     }
 
     private void bindMusciService() {

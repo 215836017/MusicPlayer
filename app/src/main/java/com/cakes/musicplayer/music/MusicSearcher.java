@@ -2,6 +2,8 @@ package com.cakes.musicplayer.music;
 
 import android.content.Context;
 
+import com.cakes.musicplayer.threads.ThreadPoolHelper;
+
 /**
  * MediaStore的学习： （1）http://blog.csdn.net/wuqingyidongren/article/details/53640399
  * （2）https://www.oschina.net/question/16_7603
@@ -10,27 +12,26 @@ import android.content.Context;
 
 public class MusicSearcher {
 
-    private QueryLocalMusicThread thread;
+    private QueryLocalMusicRunnable queryLocalMusicRunnable;
 
     public MusicSearcher(Context context, QueryLocalMusicListener queryLocalMusicListener) {
-        thread = new QueryLocalMusicThread(context.getApplicationContext());
-        thread.setQueryListener(queryLocalMusicListener);
+        queryLocalMusicRunnable = new QueryLocalMusicRunnable(context.getApplicationContext(), queryLocalMusicListener);
     }
 
     /**
      * 获取内存中存储的音乐文件
      */
     public void queryInnerMusicFiles() {
-        thread.setSdcardMusic(false);
-        thread.start();
+        queryLocalMusicRunnable.setSdcardMusic(false);
+        ThreadPoolHelper.getInstance().addTask(queryLocalMusicRunnable);
     }
 
     /**
      * 获取sdcard上存储的音乐文件
      */
     public void querySdcardMusicFiles() {
-        thread.setSdcardMusic(true);
+        queryLocalMusicRunnable.setSdcardMusic(true);
         // TODO: 需要申请权限 -- 动态申请权限
-        thread.start();
+        ThreadPoolHelper.getInstance().addTask(queryLocalMusicRunnable);
     }
 }

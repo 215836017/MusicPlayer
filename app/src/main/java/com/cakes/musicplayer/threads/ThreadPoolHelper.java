@@ -31,6 +31,7 @@ public class ThreadPoolHelper {
         threadPoolExecutor = new ThreadPoolExecutor(2, 4,
                 3, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(3),
                 rejectedExecutionHandler);
+        isRunning = true;
     }
 
     public void releaseThreadPool() {

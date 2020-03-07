@@ -25,8 +25,9 @@ public class QueryLocalMusicRunnable implements BaseRunnable {
 
     private QueryLocalMusicListener queryListener;
 
-    public QueryLocalMusicRunnable(Context context) {
+    public QueryLocalMusicRunnable(Context context, QueryLocalMusicListener queryListener) {
         this.context = context;
+        this.queryListener = queryListener;
         this.isSdcardMusic = true;
     }
 
@@ -40,6 +41,15 @@ public class QueryLocalMusicRunnable implements BaseRunnable {
         if (null != queryListener) {
             queryListener.onQueryMusicFailed();
         }
+    }
+
+    /**
+     * 设置从内部存储查找还是从外部存储(sdcard存储)查找. 如果不调用该方法, 则构造方法中默认为true
+     *
+     * @param sdcardMusic true: 从外部存储(sdcard存储查找); false: 从内部存储查找
+     */
+    public void setSdcardMusic(boolean sdcardMusic) {
+        isSdcardMusic = sdcardMusic;
     }
 
     /**
