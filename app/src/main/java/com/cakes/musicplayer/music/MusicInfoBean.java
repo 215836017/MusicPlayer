@@ -92,7 +92,11 @@ public class MusicInfoBean {
         this.albumId = albumId;
     }
 
+    private final String SUFFIX_MP3 = ".mp3";
     public String getDisplayName() {
+        if(displayName.endsWith(SUFFIX_MP3)){
+           displayName = displayName.substring(0, displayName.length() - SUFFIX_MP3.length());
+        }
         return displayName;
     }
 

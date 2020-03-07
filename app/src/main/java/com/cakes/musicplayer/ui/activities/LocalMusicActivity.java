@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -173,6 +174,10 @@ public class LocalMusicActivity extends AppCompatActivity {
         }
     }
 
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -242,22 +247,24 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
-        public void onStart() {
+        public void onStart(MusicInfoBean infoBean) {
+            LogUtil.d(TAG, "music: " + infoBean.getDisplayName() + " is playing...");
+            showToast("music: " + infoBean.getDisplayName() + " is playing...");
+        }
+
+        @Override
+        public void onStop(MusicInfoBean infoBean) {
 
         }
 
         @Override
-        public void onStop() {
-
+        public void onComplete(MusicInfoBean infoBean) {
+            LogUtil.d(TAG, "music: " + infoBean.getDisplayName() + " play completed!");
+            showToast("music: " + infoBean.getDisplayName() + " play completed!");
         }
 
         @Override
-        public void onComplete() {
-
-        }
-
-        @Override
-        public void onError(int errorCode) {
+        public void onError(MusicInfoBean infoBean, int errorCode) {
 
         }
     };

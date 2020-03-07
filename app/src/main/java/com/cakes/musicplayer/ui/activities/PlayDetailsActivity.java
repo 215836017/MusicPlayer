@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.cakes.musicplayer.R;
+import com.cakes.musicplayer.music.MusicInfoBean;
 import com.cakes.musicplayer.play.OnMusicPlayListener;
 import com.cakes.musicplayer.service.MusicService;
 
@@ -55,23 +56,24 @@ public class PlayDetailsActivity extends AppCompatActivity {
     };
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
+
         @Override
-        public void onStart() {
+        public void onStart(MusicInfoBean currentMusicInfo) {
 
         }
 
         @Override
-        public void onStop() {
+        public void onStop(MusicInfoBean currentMusicInfo) {
 
         }
 
         @Override
-        public void onComplete() {
+        public void onComplete(MusicInfoBean currentMusicInfo) {
 
         }
 
         @Override
-        public void onError(int errorCode) {
+        public void onError(MusicInfoBean currentMusicInfo, int errorCode) {
 
         }
     };

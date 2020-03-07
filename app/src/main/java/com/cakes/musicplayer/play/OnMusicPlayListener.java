@@ -1,13 +1,15 @@
 package com.cakes.musicplayer.play;
 
+import com.cakes.musicplayer.music.MusicInfoBean;
+
 public interface OnMusicPlayListener {
-    void onStart();
+    void onStart(MusicInfoBean currentMusicInfo);
 
-    void onStop();
+    void onStop(MusicInfoBean currentMusicInfo);
 
-    void onComplete();
+    void onComplete(MusicInfoBean currentMusicInfo);
 
-    void onError(int errorCode);
+    void onError(MusicInfoBean currentMusicInfo, int errorCode);
 }
 
 //public interface OnMusicServiceListener {

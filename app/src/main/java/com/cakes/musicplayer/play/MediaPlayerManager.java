@@ -46,7 +46,7 @@ public class MediaPlayerManager {
      */
     public void play(String musicPath) {
         if (TextUtils.isEmpty(musicPath)) {
-            musicPlayerListener.onError(0);
+            musicPlayerListener.onError(currentMusicInfo,0);
             return;
         }
 
@@ -62,12 +62,12 @@ public class MediaPlayerManager {
      */
     public void play(MusicInfoBean musicInfoBean) {
         if (null == musicInfoBean) {
-            musicPlayerListener.onError(0);
+            musicPlayerListener.onError(currentMusicInfo,0);
             return;
         }
         String musicPath = musicInfoBean.getPath();
         if (TextUtils.isEmpty(musicPath)) {
-            musicPlayerListener.onError(0);
+            musicPlayerListener.onError(currentMusicInfo,0);
             return;
         }
         currentMusicInfo = musicInfoBean;
@@ -76,17 +76,17 @@ public class MediaPlayerManager {
 
     private void prepare(String url) {
         LogUtil.i(TAG, "prepare() --- start, url = " + url);
-//        try {
-//            isPreparing = true;
-//            mediaPlayer.reset();
-//            mediaPlayer.setDataSource(url);
-//            mediaPlayer.prepareAsync();
-//
-//        } catch (IOException e1) {
-//            isPreparing = false;
-//            LogUtil.d(TAG, "set datasource failed");
-//            e1.printStackTrace();
-//        }
+        try {
+            isPreparing = true;
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepareAsync();
+
+        } catch (IOException e1) {
+            isPreparing = false;
+            LogUtil.d(TAG, "set datasource failed");
+            e1.printStackTrace();
+        }
     }
 
     public void pause() {
@@ -102,7 +102,7 @@ public class MediaPlayerManager {
             mediaPlayer.stop();
 
             if (musicPlayerListener != null) {
-                musicPlayerListener.onStop();
+                musicPlayerListener.onStop(currentMusicInfo);
             }
         }
     }
@@ -134,6 +134,10 @@ public class MediaPlayerManager {
         public void onPrepared(MediaPlayer mp) {
             isPreparing = false;
             Log.d(TAG, "onPrepared");
+            mp.start();
+            if(null != musicPlayerListener){
+                musicPlayerListener.onStart(currentMusicInfo);
+            }
         }
     };
 
@@ -143,7 +147,7 @@ public class MediaPlayerManager {
             Log.d(TAG, "onError = " + what);
             isPreparing = false;
             if (musicPlayerListener != null) {
-                musicPlayerListener.onError(what);
+                musicPlayerListener.onError(currentMusicInfo,what);
             }
             return false;
         }
@@ -154,7 +158,7 @@ public class MediaPlayerManager {
         public void onCompletion(MediaPlayer mp) {
 
             if (musicPlayerListener != null) {
-                musicPlayerListener.onComplete();
+                musicPlayerListener.onComplete(currentMusicInfo);
             }
         }
     };

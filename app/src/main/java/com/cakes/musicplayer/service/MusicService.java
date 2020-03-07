@@ -137,30 +137,30 @@ public class MusicService extends Service {
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
-        public void onStart() {
+        public void onStart(MusicInfoBean infoBean) {
             for (OnMusicPlayListener listener : playerListenerList) {
-                listener.onStart();
+                listener.onStart(infoBean);
             }
         }
 
         @Override
-        public void onStop() {
+        public void onStop(MusicInfoBean infoBean) {
             for (OnMusicPlayListener listener : playerListenerList) {
-                listener.onStop();
+                listener.onStop(infoBean);
             }
         }
 
         @Override
-        public void onComplete() {
+        public void onComplete(MusicInfoBean infoBean) {
             for (OnMusicPlayListener listener : playerListenerList) {
-                listener.onComplete();
+                listener.onComplete(infoBean);
             }
         }
 
         @Override
-        public void onError(int errorCode) {
+        public void onError(MusicInfoBean infoBean, int errorCode) {
             for (OnMusicPlayListener listener : playerListenerList) {
-                listener.onError(errorCode);
+                listener.onError(infoBean, errorCode);
             }
         }
     };
