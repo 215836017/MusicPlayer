@@ -10,6 +10,7 @@ import android.os.Message;
 import com.cakes.musicplayer.music.MusicInfoBean;
 import com.cakes.musicplayer.play.MediaPlayerManager;
 import com.cakes.musicplayer.play.OnMusicPlayListener;
+import com.cakes.musicplayer.play.UpdateProgressThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +34,8 @@ public class MusicService extends Service {
     private MusicPlayBinder musicPlayBinder = new MusicPlayBinder();
     private List<OnMusicPlayListener> playerListenerList = new ArrayList<>();
     private MediaPlayerManager mediaPlayerManager;
+    private UpdateProgressThread updateProgressThread;
 
-    private final int MSG_PLAY_COMPLETE = 0x10;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            handleMsg(msg);
-        }
-    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -72,25 +66,15 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (null != updateProgressThread) {
+            updateProgressThread.release();
+        }
         mediaPlayerManager.release();
         mediaPlayerManager = null;
     }
 
     private void initManagers() {
         mediaPlayerManager = new MediaPlayerManager(musicPlayerListener);
-    }
-
-    private void handleMsg(Message msg) {
-        switch (msg.what) {
-            case MSG_PLAY_COMPLETE:
-                doWorkForPlayComplete();
-                break;
-
-        }
-    }
-
-    private void doWorkForPlayComplete() {
-
     }
 
     public void addMusicPlayListener(OnMusicPlayListener onMusicPlayListener) {
@@ -133,13 +117,17 @@ public class MusicService extends Service {
         public int getCurrentPosition() {
             return mediaPlayerManager.getCurrentPosition();
         }
+
+        public boolean isPlaying(){
+            return mediaPlayerManager.isPlaying();
+        }
     }
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
-        public void onStart(MusicInfoBean infoBean) {
+        public void onStart(MusicInfoBean infoBean, int duration) {
             for (OnMusicPlayListener listener : playerListenerList) {
-                listener.onStart(infoBean);
+                listener.onStart(infoBean, duration);
             }
         }
 
@@ -158,10 +146,18 @@ public class MusicService extends Service {
         }
 
         @Override
+        public void onProgress(int duration) {
+            for (OnMusicPlayListener listener : playerListenerList) {
+                listener.onProgress(duration);
+            }
+        }
+
+        @Override
         public void onError(MusicInfoBean infoBean, int errorCode) {
             for (OnMusicPlayListener listener : playerListenerList) {
                 listener.onError(infoBean, errorCode);
             }
         }
     };
+
 }

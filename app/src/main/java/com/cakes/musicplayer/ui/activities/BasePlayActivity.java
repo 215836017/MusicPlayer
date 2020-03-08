@@ -53,7 +53,7 @@ public class BasePlayActivity extends AppCompatActivity {
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
-        public void onStart(MusicInfoBean currentMusicInfo) {
+        public void onStart(MusicInfoBean currentMusicInfo, int duration) {
 
         }
 
@@ -64,6 +64,11 @@ public class BasePlayActivity extends AppCompatActivity {
 
         @Override
         public void onComplete(MusicInfoBean currentMusicInfo) {
+
+        }
+
+        @Override
+        public void onProgress(int duration) {
 
         }
 

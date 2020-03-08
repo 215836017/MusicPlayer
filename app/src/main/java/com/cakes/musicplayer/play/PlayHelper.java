@@ -1,37 +1,74 @@
 package com.cakes.musicplayer.play;
 
-import java.util.Random;
+
+import com.cakes.musicplayer.music.MusicInfoBean;
+import com.cakes.musicplayer.utils.LogUtil;
+
+import java.util.List;
 
 public class PlayHelper {
 
-    private String[] pathSdcard = {
-            "sdcard/a.mp3",
-            "sdcard/b.mp3",
-            "sdcard/c.mp3"
-    };
+    private final String TAG = "PlayHelper";
 
-    public int changeMusicOrder(int currentPlayIndex, int musicCount, boolean isNext) {
+    private static PlayHelper INSTANCE;
 
-        int index = 0;
-        if (isNext) {
-            if (currentPlayIndex == (musicCount - 1)) {
-                index = 0;
-            } else {
-                index = currentPlayIndex++;
-            }
-        } else {
-            if (currentPlayIndex == 0) {
-                index = musicCount - 1;
-            } else {
-                index = currentPlayIndex--;
-            }
-        }
-        return index;
+    private List<MusicInfoBean> playingList;
+    private int playingPosition;
+
+    private PlayHelper() {
+
     }
 
-    public int changeMusicRandom(int musicCount) {
+    public static PlayHelper getInstance() {
+        if (null == INSTANCE) {
+            synchronized (PlayHelper.class) {
+                if (null == INSTANCE) {
+                    INSTANCE = new PlayHelper();
+                }
+            }
+        }
 
-        Random random = new Random();
-        return random.nextInt(musicCount);
+        return INSTANCE;
+    }
+
+
+    public List<MusicInfoBean> getPlayingList() {
+        return playingList;
+    }
+
+    public void setPlayingListAndPosition(List<MusicInfoBean> playingList, int playingPosition) {
+        this.playingPosition = playingPosition;
+        setPlayingList(playingList);
+        showList();
+
+    }
+
+    public void setPlayingList(List<MusicInfoBean> playingList) {
+        this.playingList = playingList;
+        showList();
+
+    }
+
+    private void showList() {
+        if (null != playingList) {
+            LogUtil.d(TAG, "playingList.size() = " + playingList.size());
+            int i = 0;
+            for (MusicInfoBean bean : playingList) {
+                LogUtil.d(TAG, "playingList--bean = " + bean.toString());
+
+                if (i >= 5) {
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    public int getPlayingPosition() {
+        return playingPosition;
+    }
+
+    public void setPlayingPosition(int playingPosition) {
+        this.playingPosition = playingPosition;
     }
 }

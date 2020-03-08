@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cakes.musicplayer.R;
 import com.cakes.musicplayer.music.MusicInfoBean;
 import com.cakes.musicplayer.music.MusicList;
+import com.cakes.musicplayer.play.PlayHelper;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
             @Override
             public void onClick(View v) {
                 itemEventListener.playMusic(position, bean);
+                PlayHelper.getInstance().setPlayingListAndPosition(musicList, position);
             }
         });
 
@@ -59,6 +61,15 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
             return musicList.size();
         }
         return -1;
+    }
+
+
+    public MusicInfoBean getMusicInfoBean(int pos) {
+        if (pos < 0 || pos >= getItemCount()) {
+            return null;
+        }else{
+            return musicList.get(pos);
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

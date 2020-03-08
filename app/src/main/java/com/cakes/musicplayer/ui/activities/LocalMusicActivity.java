@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,24 +27,28 @@ import com.cakes.musicplayer.music.MusicList;
 import com.cakes.musicplayer.music.MusicSearcher;
 import com.cakes.musicplayer.music.QueryLocalMusicListener;
 import com.cakes.musicplayer.play.OnMusicPlayListener;
+import com.cakes.musicplayer.play.PlayHelper;
+import com.cakes.musicplayer.play.PlayMode;
 import com.cakes.musicplayer.ui.adapters.LocalMusicAdapter;
 import com.cakes.musicplayer.ui.adapters.OnItemEventListener;
 import com.cakes.musicplayer.service.MusicService;
 import com.cakes.musicplayer.utils.LogUtil;
+import com.cakes.musicplayer.utils.ToastUtil;
 import com.cakes.musicplayer.utils.sp.SPConstant;
 import com.cakes.musicplayer.utils.sp.SPUtil;
-import com.cakes.musicplayer.utils.sp.SPUtilTest;
 
 import java.util.List;
 
-public class LocalMusicActivity extends AppCompatActivity {
+/**
+ * 亿图图示-跨平台综合办公绘图软件
+ */
+public class LocalMusicActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "LocalMusicActivity";
 
     private RecyclerView recyclerView;
     private LinearLayout layoutLoading;
     private TextView textEmpty;
-
     private ConstraintLayout layoutControlRoot;
     private ImageView imageControlAlbum;
     private SeekBar seekBarControl;
@@ -60,7 +63,14 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private MusicService.MusicPlayBinder musicPlayBinder;
 
+    private MusicInfoBean currentPlayMusic;
     private final int MSG_QUERY_FINISH = 0x10;
+    private final int MSG_PLAY_START = 0x11;
+    private final int MSG_PLAY_STOP = 0x12;
+    private final int MSG_PLAY_COMPLETE = 0x13;
+    private final int MSG_PLAY_ERROR = 0x14;
+    private final int MSG_PLAY_UPDATE = 0x15;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -76,7 +86,10 @@ public class LocalMusicActivity extends AppCompatActivity {
 
         initView();
         queryData();
+        bindMusciService();
         initBottomControlViews();
+
+        PlayMode.getInstance().setPlayMode(PlayMode.PLAY_MODE_LIST_ORDER);
     }
 
     @Override
@@ -91,17 +104,6 @@ public class LocalMusicActivity extends AppCompatActivity {
         try {
             unbindService(serviceConnection);
         } catch (Exception e) {
-        }
-    }
-
-    private void handleMsg(Message msg) {
-        switch (msg.what) {
-            case MSG_QUERY_FINISH:
-                LogUtil.d(TAG, "case MSG_QUERY_FINISH -- 11111111");
-                bindMusciService();
-                adaptData();
-                hideLoadingView();
-                break;
         }
     }
 
@@ -125,18 +127,19 @@ public class LocalMusicActivity extends AppCompatActivity {
         imageControlPlay = findViewById(R.id.layout_bottom_control_image_play);
         imageControlNext = findViewById(R.id.layout_bottom_control_image_next);
 
-        setDatasForBottomControlViews();
+        setDataForBottomControlViews();
 
-        layoutControlRoot.setOnClickListener(controlLayoutClickListener);
-        imageControlAlbum.setOnClickListener(controlLayoutClickListener);
-        imageControlList.setOnClickListener(controlLayoutClickListener);
-        imageControlPlay.setOnClickListener(controlLayoutClickListener);
-        imageControlNext.setOnClickListener(controlLayoutClickListener);
+        layoutControlRoot.setOnClickListener(this);
+        imageControlAlbum.setOnClickListener(this);
+        imageControlList.setOnClickListener(this);
+        imageControlPlay.setOnClickListener(this);
+        imageControlNext.setOnClickListener(this);
 
         seekBarControl.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
-    private void setDatasForBottomControlViews() {
+
+    private void setDataForBottomControlViews() {
         getLastPlayInfo();
 
     }
@@ -160,6 +163,37 @@ public class LocalMusicActivity extends AppCompatActivity {
         bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE);
     }
 
+
+    private void handleMsg(Message msg) {
+        switch (msg.what) {
+            case MSG_QUERY_FINISH:
+                LogUtil.d(TAG, "case MSG_QUERY_FINISH -- 11111111");
+                adaptData();
+                hideLoadingView();
+                break;
+
+            case MSG_PLAY_START:
+                onPlayStart(msg);
+                break;
+
+            case MSG_PLAY_STOP:
+                onPlayPause();
+                break;
+
+            case MSG_PLAY_COMPLETE:
+                onPlayComplete();
+                break;
+
+            case MSG_PLAY_ERROR:
+                onPlayError();
+                break;
+
+            case MSG_PLAY_UPDATE:
+                onPlayProgressUpdate(msg);
+                break;
+        }
+    }
+
     private void hideLoadingView() {
         layoutLoading.setVisibility(View.GONE);
     }
@@ -174,35 +208,108 @@ public class LocalMusicActivity extends AppCompatActivity {
         }
     }
 
+    private void onPlayStart(Message msg) {
+        imageControlAlbum.setImageResource(R.mipmap.ic_launcher_round);
+        textControlName.setText(currentPlayMusic.getDisplayName());
+        textControlAuthor.setText(currentPlayMusic.getArtist());
+        imageControlPlay.setImageResource(R.drawable.ic_media_pause);
+        seekBarControl.setMax(msg.arg1 / 1000);
+    }
+
+    private void onPlayPause() {
+        imageControlAlbum.setImageResource(R.mipmap.ic_launcher_round);
+        textControlName.setText(currentPlayMusic.getDisplayName());
+        textControlAuthor.setText(currentPlayMusic.getArtist());
+        imageControlPlay.setImageResource(R.drawable.ic_media_play);
+    }
+
+    private void onPlayComplete() {
+        imageControlAlbum.setImageResource(R.mipmap.ic_launcher_round);
+        textControlName.setText("");
+        textControlAuthor.setText("");
+        imageControlPlay.setImageResource(R.drawable.ic_media_play);
+
+        playNext();
+    }
+
+    private void onPlayError() {
+        imageControlAlbum.setImageResource(R.mipmap.ic_launcher_round);
+        textControlName.setText("");
+        textControlAuthor.setText("");
+        imageControlPlay.setImageResource(R.drawable.ic_media_play);
+    }
+
+    private void onPlayProgressUpdate(Message msg) {
+        LogUtil.d(TAG, "seekbar onPlayProgressUpdate() -- 1111");
+        seekBarControl.setProgress(msg.arg1 / 1000);
+    }
+
     private void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        LogUtil.i(TAG, "showToast() -- msg = " + msg);
+        ToastUtil.showLong(this, msg);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_bottom_control_layout_root:
+            case R.id.layout_bottom_control_image_album:
+                startActivity(new Intent(LocalMusicActivity.this, PlayDetailsActivity.class));
+                break;
+
+            case R.id.layout_bottom_control_image_play:
+                play();
+                break;
+
+            case R.id.layout_bottom_control_image_next:
+                playNext();
+                break;
+
+            case R.id.layout_bottom_control_image_list:
+                // todo show the playing list
+                break;
+        }
+    }
+
+    private void play() {
+        if (musicPlayBinder.isPlaying()) {
+            musicPlayBinder.pause();
+
+        } else {
+            if (null != currentPlayMusic) {
+                musicPlayBinder.playMusic(currentPlayMusic);
+            }
+        }
+    }
+
+    private void playNext() {
+        int position = PlayMode.getInstance().getNextPosition(PlayHelper.getInstance().getPlayingPosition(),
+                PlayHelper.getInstance().getPlayingList().size());
+
+
+        currentPlayMusic = localMusicAdapter.getMusicInfoBean(position);
+        if (null != currentPlayMusic) {
+            LogUtil.d(TAG, "playNext() -- position = " + position + ", music is: " + currentPlayMusic.toString());
+            musicPlayBinder.playMusic(currentPlayMusic);
+        }
     }
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+            LogUtil.i(TAG, "seekBarChangeListener - onProgressChanged(): progress = " + progress
+                    + ", fromUser = " + fromUser);
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-
+            LogUtil.i(TAG, "seekBarChangeListener - onProgressChanged(): 1111111");
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
-
-    private View.OnClickListener controlLayoutClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.layout_bottom_control_layout_root:
-                    startActivity(new Intent(LocalMusicActivity.this, PlayDetailsActivity.class));
-                    break;
-            }
+            LogUtil.i(TAG, "seekBarChangeListener - onProgressChanged(): 1111111");
         }
     };
 
@@ -247,25 +354,47 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
-        public void onStart(MusicInfoBean infoBean) {
-            LogUtil.d(TAG, "music: " + infoBean.getDisplayName() + " is playing...");
+        public void onStart(MusicInfoBean infoBean, int duration) {
             showToast("music: " + infoBean.getDisplayName() + " is playing...");
+            if (null != infoBean) {
+                currentPlayMusic = infoBean;
+                Message msgStart = handler.obtainMessage(MSG_PLAY_START, duration, -1);
+                handler.sendMessage(msgStart);
+            }
         }
 
         @Override
         public void onStop(MusicInfoBean infoBean) {
-
+            if (null != infoBean) {
+                currentPlayMusic = infoBean;
+                handler.sendEmptyMessage(MSG_PLAY_STOP);
+            }
         }
 
         @Override
         public void onComplete(MusicInfoBean infoBean) {
-            LogUtil.d(TAG, "music: " + infoBean.getDisplayName() + " play completed!");
-            showToast("music: " + infoBean.getDisplayName() + " play completed!");
+            if (null != infoBean) {
+                showToast("music: " + infoBean.getDisplayName() + " play completed!");
+                currentPlayMusic = infoBean;
+                handler.sendEmptyMessage(MSG_PLAY_COMPLETE);
+            }
+        }
+
+        @Override
+        public void onProgress(int currentDuration) {
+            LogUtil.d(TAG, "seekbar  onProgress() -- currentDuration = " + currentDuration);
+            Message msgProgress = handler.obtainMessage(MSG_PLAY_UPDATE, currentDuration, -1);
+            handler.sendMessage(msgProgress);
         }
 
         @Override
         public void onError(MusicInfoBean infoBean, int errorCode) {
-
+            if (null != infoBean) {
+                currentPlayMusic = infoBean;
+            }
+            handler.sendEmptyMessage(MSG_PLAY_ERROR);
         }
     };
+
+
 }

@@ -21,10 +21,13 @@
     <SeekBar
         android:id="@+id/layout_bottom_control_seekbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="307dp"
-        android:layout_height="7dp"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/layout_bottom_control_image_album"
         app:layout_constraintTop_toTopOf="parent" />
 

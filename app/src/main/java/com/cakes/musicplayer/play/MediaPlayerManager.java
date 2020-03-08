@@ -2,7 +2,6 @@ package com.cakes.musicplayer.play;
 
 import android.media.MediaPlayer;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.cakes.musicplayer.music.MusicInfoBean;
 import com.cakes.musicplayer.utils.LogUtil;
@@ -14,6 +13,7 @@ public class MediaPlayerManager {
 
     private MediaPlayer mediaPlayer;
     private OnMusicPlayListener musicPlayerListener;
+    private UpdateProgressThread updateProgressThread;
 
     private boolean isPreparing;
     private MusicInfoBean currentMusicInfo;
@@ -39,6 +39,18 @@ public class MediaPlayerManager {
         return mediaPlayer.isPlaying();
     }
 
+    public int getCurrentPosition() {
+        return mediaPlayer.getCurrentPosition();
+    }
+
+    public int getDuration() {
+        return mediaPlayer.getDuration();
+    }
+
+    public void seekToPosition(int position) {
+        mediaPlayer.seekTo(position);
+    }
+
     /**
      * 播放网络URL对应的歌曲
      *
@@ -46,7 +58,7 @@ public class MediaPlayerManager {
      */
     public void play(String musicPath) {
         if (TextUtils.isEmpty(musicPath)) {
-            musicPlayerListener.onError(currentMusicInfo,0);
+            musicPlayerListener.onError(currentMusicInfo, 0);
             return;
         }
 
@@ -62,12 +74,12 @@ public class MediaPlayerManager {
      */
     public void play(MusicInfoBean musicInfoBean) {
         if (null == musicInfoBean) {
-            musicPlayerListener.onError(currentMusicInfo,0);
+            musicPlayerListener.onError(currentMusicInfo, 0);
             return;
         }
         String musicPath = musicInfoBean.getPath();
         if (TextUtils.isEmpty(musicPath)) {
-            musicPlayerListener.onError(currentMusicInfo,0);
+            musicPlayerListener.onError(currentMusicInfo, 0);
             return;
         }
         currentMusicInfo = musicInfoBean;
@@ -115,12 +127,18 @@ public class MediaPlayerManager {
         }
     }
 
-    public int getCurrentPosition() {
-        return mediaPlayer.getCurrentPosition();
+    private void startUpdateProgress() {
+        if (null == updateProgressThread) {
+            updateProgressThread = new UpdateProgressThread(onProgressListener);
+        }
+
+        updateProgressThread.startUpdateProgress();
     }
 
-    public void seekToPosition(int position) {
-        mediaPlayer.seekTo(position);
+    private void pauseUpdateProgress() {
+        if (null != updateProgressThread) {
+            updateProgressThread.pauseUpdateProgress();
+        }
     }
 
     private MediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new MediaPlayer.OnSeekCompleteListener() {
@@ -133,10 +151,11 @@ public class MediaPlayerManager {
         @Override
         public void onPrepared(MediaPlayer mp) {
             isPreparing = false;
-            Log.d(TAG, "onPrepared");
+            LogUtil.d(TAG, "onPrepared");
             mp.start();
-            if(null != musicPlayerListener){
-                musicPlayerListener.onStart(currentMusicInfo);
+            startUpdateProgress();
+            if (null != musicPlayerListener) {
+                musicPlayerListener.onStart(currentMusicInfo, mediaPlayer.getDuration());
             }
         }
     };
@@ -144,11 +163,12 @@ public class MediaPlayerManager {
     private MediaPlayer.OnErrorListener mOnErrorListener = new MediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(MediaPlayer mp, int what, int extra) {
-            Log.d(TAG, "onError = " + what);
+            LogUtil.d(TAG, "onError = " + what);
             isPreparing = false;
             if (musicPlayerListener != null) {
-                musicPlayerListener.onError(currentMusicInfo,what);
+                musicPlayerListener.onError(currentMusicInfo, what);
             }
+            pauseUpdateProgress();
             return false;
         }
     };
@@ -159,6 +179,17 @@ public class MediaPlayerManager {
 
             if (musicPlayerListener != null) {
                 musicPlayerListener.onComplete(currentMusicInfo);
+            }
+
+            pauseUpdateProgress();
+        }
+    };
+
+    private UpdateProgressThread.OnProgressListener onProgressListener = new UpdateProgressThread.OnProgressListener() {
+        @Override
+        public void onUpdateProgress() {
+            if (musicPlayerListener != null) {
+                musicPlayerListener.onProgress(mediaPlayer.getCurrentPosition());
             }
         }
     };
