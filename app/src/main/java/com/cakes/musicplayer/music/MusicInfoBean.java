@@ -17,7 +17,6 @@ public class MusicInfoBean {
     private String path;//歌曲路径
     private String lrcTitle;//歌词名称
     private String lrcSize;//歌词大小
-
     private boolean isPlaying;
 
     public MusicInfoBean() {
@@ -93,9 +92,10 @@ public class MusicInfoBean {
     }
 
     private final String SUFFIX_MP3 = ".mp3";
+
     public String getDisplayName() {
-        if(displayName.endsWith(SUFFIX_MP3)){
-           displayName = displayName.substring(0, displayName.length() - SUFFIX_MP3.length());
+        if (displayName.endsWith(SUFFIX_MP3)) {
+            displayName = displayName.substring(0, displayName.length() - SUFFIX_MP3.length());
         }
         return displayName;
     }

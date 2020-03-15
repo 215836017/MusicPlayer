@@ -31,7 +31,6 @@ public class PlayHelper {
         return INSTANCE;
     }
 
-
     public List<MusicInfoBean> getPlayingList() {
         return playingList;
     }
@@ -39,13 +38,13 @@ public class PlayHelper {
     public void setPlayingListAndPosition(List<MusicInfoBean> playingList, int playingPosition) {
         this.playingPosition = playingPosition;
         setPlayingList(playingList);
-        showList();
+//        showList();
 
     }
 
     public void setPlayingList(List<MusicInfoBean> playingList) {
         this.playingList = playingList;
-        showList();
+//        showList();
 
     }
 
@@ -70,5 +69,10 @@ public class PlayHelper {
 
     public void setPlayingPosition(int playingPosition) {
         this.playingPosition = playingPosition;
+    }
+
+
+    public MusicInfoBean getPlayingInfoBean() {
+        return playingList.get(playingPosition);
     }
 }

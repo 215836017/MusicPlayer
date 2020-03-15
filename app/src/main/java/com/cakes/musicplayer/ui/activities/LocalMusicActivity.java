@@ -213,7 +213,11 @@ public class LocalMusicActivity extends AppCompatActivity implements View.OnClic
         textControlName.setText(currentPlayMusic.getDisplayName());
         textControlAuthor.setText(currentPlayMusic.getArtist());
         imageControlPlay.setImageResource(R.drawable.ic_media_pause);
-        seekBarControl.setMax(msg.arg1 / 1000);
+//        seekBarControl.setMax(msg.arg1 / 1000);
+
+        MusicInfoBean playingInfoBean = PlayHelper.getInstance().getPlayingInfoBean();
+        playingInfoBean.setPlaying(true);
+        localMusicAdapter.updateItem(PlayHelper.getInstance().getPlayingPosition(), playingInfoBean);
     }
 
     private void onPlayPause() {
@@ -229,6 +233,10 @@ public class LocalMusicActivity extends AppCompatActivity implements View.OnClic
         textControlAuthor.setText("");
         imageControlPlay.setImageResource(R.drawable.ic_media_play);
 
+        MusicInfoBean playingInfoBean = PlayHelper.getInstance().getPlayingInfoBean();
+        playingInfoBean.setPlaying(false);
+        localMusicAdapter.updateItem(PlayHelper.getInstance().getPlayingPosition(), playingInfoBean);
+
         playNext();
     }
 
@@ -240,8 +248,8 @@ public class LocalMusicActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onPlayProgressUpdate(Message msg) {
-        LogUtil.d(TAG, "seekbar onPlayProgressUpdate() -- 1111");
-        seekBarControl.setProgress(msg.arg1 / 1000);
+//        LogUtil.d(TAG, "seekbar onPlayProgressUpdate() -- 1111");
+//        seekBarControl.setProgress(msg.arg1 / 1000);
     }
 
     private void showToast(String msg) {
@@ -283,14 +291,18 @@ public class LocalMusicActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void playNext() {
-        int position = PlayMode.getInstance().getNextPosition(PlayHelper.getInstance().getPlayingPosition(),
+        int nextPosition = PlayMode.getInstance().getNextPosition(
+                PlayHelper.getInstance().getPlayingPosition() ,
                 PlayHelper.getInstance().getPlayingList().size());
+        LogUtil.d(TAG, "playNext() -- getNextPosition = " + nextPosition);
 
-
-        currentPlayMusic = localMusicAdapter.getMusicInfoBean(position);
+        PlayHelper.getInstance().setPlayingPosition(nextPosition);
+        currentPlayMusic = localMusicAdapter.getMusicInfoBean(nextPosition);
         if (null != currentPlayMusic) {
-            LogUtil.d(TAG, "playNext() -- position = " + position + ", music is: " + currentPlayMusic.toString());
+            LogUtil.d(TAG, "playNext() -- nextPosition = " + nextPosition + ", music is: " + currentPlayMusic.toString());
             musicPlayBinder.playMusic(currentPlayMusic);
+        } else {
+            LogUtil.w(TAG, "playNext() -- currentPlayMusic = null");
         }
     }
 
@@ -382,7 +394,7 @@ public class LocalMusicActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         public void onProgress(int currentDuration) {
-            LogUtil.d(TAG, "seekbar  onProgress() -- currentDuration = " + currentDuration);
+//            LogUtil.d(TAG, "seekbar  onProgress() -- currentDuration = " + currentDuration);
             Message msgProgress = handler.obtainMessage(MSG_PLAY_UPDATE, currentDuration, -1);
             handler.sendMessage(msgProgress);
         }

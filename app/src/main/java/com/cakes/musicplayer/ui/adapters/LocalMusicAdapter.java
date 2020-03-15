@@ -1,6 +1,7 @@
 package com.cakes.musicplayer.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,12 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
             }
         });
 
+        if (bean.isPlaying()) {
+            holder.layoutRoot.setBackgroundColor(Color.BLUE);
+
+        } else {
+            holder.layoutRoot.setBackgroundColor(Color.WHITE);
+        }
         holder.textName.setText(bean.getDisplayName());
         holder.textAuthor.setText(bean.getArtist());
     }
@@ -67,7 +74,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
     public MusicInfoBean getMusicInfoBean(int pos) {
         if (pos < 0 || pos >= getItemCount()) {
             return null;
-        }else{
+        } else {
             return musicList.get(pos);
         }
     }
@@ -88,5 +95,10 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.Vi
             imageMore = itemView.findViewById(R.id.item_local_music_btn_more);
 
         }
+    }
+
+    public void updateItem(int pos, MusicInfoBean bean) {
+        musicList.set(pos, bean);
+        notifyItemChanged(pos);
     }
 }

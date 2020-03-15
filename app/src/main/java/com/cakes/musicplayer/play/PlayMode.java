@@ -1,10 +1,12 @@
 package com.cakes.musicplayer.play;
 
-import com.cakes.musicplayer.R;
+import com.cakes.musicplayer.utils.LogUtil;
 
 import java.util.Random;
 
 public class PlayMode {
+
+    private final String TAG = "PlayMode";
 
     /*** save to SharedPreferences, or read from SharedPreferences */
     public static final String LAST_PLAY_MODE = "lastPlayMode";
@@ -44,6 +46,9 @@ public class PlayMode {
     }
 
     public int getNextPosition(int currentPosition, int listLength) {
+        LogUtil.d(TAG, "getNextPosition() --playMode = " + playMode
+                + ",currentPosition = " + currentPosition
+                + ", listLength = " + listLength);
         switch (playMode) {
             case PLAY_MODE_JUST_SINGLE:
                 return 1;
