@@ -7,10 +7,22 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageButton
-        android:id="@+id/item_local_music_btn_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/item_local_music_image_playing"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/icon_playing"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_local_music_text_author"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_local_music_text_name" />
+
+    <ImageView
+        android:id="@+id/item_local_music_image_more"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:rotation="90"
+        android:scaleType="centerInside"
         android:src="@mipmap/more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,13 +32,14 @@
         android:id="@+id/item_local_music_text_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="5dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/item_local_music_btn_more"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/item_local_music_image_more"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_local_music_image_playing"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="musicName" />
 
@@ -34,13 +47,15 @@
         android:id="@+id/item_local_music_text_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textSize="15dp"
+        android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_local_music_btn_more"
+        app:layout_constraintEnd_toStartOf="@+id/item_local_music_image_more"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_local_music_image_playing"
         tools:text="music author" />
 </androidx.constraintlayout.widget.ConstraintLayout>

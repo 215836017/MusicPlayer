@@ -13,15 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".ui.activities.PlayDetailsActivity"></activity>
-
-        <service
-            android:name=".service.MusicService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
-            android:name=".ui.activities.AdvertisementActivity"
+            android:name=".ui.activities.startup.AdvertisementActivity"
             android:theme="@style/ThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.LocalMusicActivity" />
+        <activity
+            android:name=".ui.activities.PlayDetailsActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ui.activities.local.LocalMusicActivity"
+            android:launchMode="singleInstance" />
+
+        <service
+            android:name=".service.MusicService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

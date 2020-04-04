@@ -3,7 +3,7 @@ package com.cakes.musicplayer.music;
 public class MusicInfoBean {
 
     private final String UNKNOWN = "unknown";
-    private final String UNKNOWN_ZH = "未知";
+    private final String UNKNOWN_ZH = "未知歌手";
 
     private long songId;   // 歌曲ID
     private String title;  //音乐标题
