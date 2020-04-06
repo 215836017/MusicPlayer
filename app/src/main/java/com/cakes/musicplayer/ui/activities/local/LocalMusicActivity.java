@@ -137,7 +137,7 @@ public class LocalMusicActivity extends BaseActivity implements View.OnClickList
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL); //设置为垂直布局，这也是默认的
         recyclerView.setLayoutManager(linearLayoutManager); //设置布局管理器
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, OrientationHelper.VERTICAL)); //设置分隔线
+       // recyclerView.addItemDecoration(new DividerItemDecoration(this, OrientationHelper.VERTICAL)); //设置分隔线
         recyclerView.setItemAnimator(new DefaultItemAnimator()); //设置增加或删除条目的动画
 
         layoutLoading = findViewById(R.id.activity_local_layout_loading);
@@ -205,7 +205,7 @@ public class LocalMusicActivity extends BaseActivity implements View.OnClickList
         textControlName.setText(currentPlayMusic.getDisplayName());
         textControlAuthor.setText(currentPlayMusic.getArtist());
         imageControlPlay.setImageResource(R.drawable.ic_media_pause);
-//        seekBarControl.setMax(msg.arg1 / 1000);
+        seekBarControl.setMax(msg.arg1 / 1000);
 
         MusicInfoBean playingInfoBean = PlayingHelper.getInstance().getPlayingInfoBean();
         playingInfoBean.setPlaying(true);
@@ -240,8 +240,8 @@ public class LocalMusicActivity extends BaseActivity implements View.OnClickList
     }
 
     private void onPlayProgressUpdate(Message msg) {
-//        LogUtil.d(TAG, "seekbar onPlayProgressUpdate() -- 1111");
-//        seekBarControl.setProgress(msg.arg1 / 1000);
+        LogUtil.d(TAG, "seekbar onPlayProgressUpdate() -- 1111");
+        seekBarControl.setProgress(msg.arg1 / 1000);
     }
 
     private void showToast(String msg) {
@@ -359,7 +359,7 @@ public class LocalMusicActivity extends BaseActivity implements View.OnClickList
     private OnMusicPlayListener musicPlayerListener = new OnMusicPlayListener() {
         @Override
         public void onStart(MusicInfoBean infoBean, int duration) {
-            showToast("music: " + infoBean.getDisplayName() + " is playing...");
+            showToast("music: " + infoBean.getDisplayName() + " is playing..duration = " + duration);
             if (null != infoBean) {
                 currentPlayMusic = infoBean;
                 Message msgStart = handler.obtainMessage(MSG_PLAY_START, duration, -1);

@@ -17,6 +17,8 @@ import com.cakes.musicplayer.music.MusicTime;
 import com.cakes.musicplayer.play.OnMusicPlayListener;
 import com.cakes.musicplayer.play.playing.PlayingHelper;
 import com.cakes.musicplayer.service.MusicService;
+import com.cakes.musicplayer.ui.activities.local.LocalMusicActivity;
+import com.cakes.musicplayer.utils.LogUtil;
 
 /**
  * 播放详情页
@@ -58,7 +60,7 @@ public class PlayDetailsActivity extends BaseActivity {
 
             case MSG_UPDATE_PLAY_PROGRESS:
                 textTimeStart.setText(MusicTime.getTimeStr(msg.arg1));
-                seekBar.setProgress(msg.arg1);
+                seekBar.setProgress(msg.arg1 / 1000);
                 break;
 
             case MSG_PLAY_ERROR:
@@ -151,7 +153,7 @@ public class PlayDetailsActivity extends BaseActivity {
     private void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.activity_playing_image_back:
-                finish();
+                startActivity(new Intent(this, LocalMusicActivity.class));
                 break;
 
             case R.id.activity_playing_image_play:
@@ -216,6 +218,7 @@ public class PlayDetailsActivity extends BaseActivity {
 
         @Override
         public void onProgress(int duration) {
+            LogUtil.i(TAG, "onProgress() -- duration = " + duration);
             Message message = handler.obtainMessage(MSG_UPDATE_PLAY_PROGRESS, duration, -1);
             handler.sendMessage(message);
         }

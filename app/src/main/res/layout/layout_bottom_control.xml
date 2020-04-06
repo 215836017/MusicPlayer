@@ -8,9 +8,11 @@
     android:clickable="true">
 
     <View
-        android:layout_width="match_parent"
+        android:id="@+id/view_dividing_line"
+        android:layout_width="0dp"
         android:layout_height="2dp"
         android:background="#000"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,39 +21,40 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_dividing_line"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <SeekBar
         android:id="@+id/layout_bottom_control_seekbar"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:min="0"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/layout_bottom_control_image_album"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/view_dividing_line" />
 
     <TextView
         android:id="@+id/layout_bottom_control_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
+        android:textSize="18dp"
         app:layout_constraintStart_toEndOf="@+id/layout_bottom_control_image_album"
-        app:layout_constraintTop_toBottomOf="@+id/layout_bottom_control_seekbar"
+        app:layout_constraintTop_toTopOf="@id/layout_bottom_control_image_album"
         tools:text="musicName" />
 
     <TextView
         android:id="@+id/layout_bottom_control_text_author"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/layout_bottom_control_image_album"
         app:layout_constraintStart_toEndOf="@+id/layout_bottom_control_image_album"
         tools:text="musicAuthor" />
